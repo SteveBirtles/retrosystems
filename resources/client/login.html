@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+    <head>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Steve's Retro System Inventory</title>
+
+        <link rel="shortcut icon" href="/client/favicon.ico" type="image/x-icon">
+
+        <script src="/client/js/jquery-3.3.1.min.js"></script>
+        <script src="/client/js/popper.min.js"></script>
+        <script src="/client/js/bootstrap.min.js"></script>
+        <script src="/client/js/js.cookie.min.js"></script>
+        <script src="/client/js/querystring.js"></script>
+
+        <link href="/client/css/bootstrap.min.css" rel="stylesheet">
+
+        <script src="/client/js/admin.js"></script>
+
+    </head>
+
+    <body class="bg-dark" onload="resetLoginForm()">
+
+        <div class="container bg-white">
+
+            <div class="container bg-white p-4">
+
+                <div class="row">
+                    <h1>Admin login</h1>
+                </div>
+
+                <div class="row">
+
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label>Username
+                                <input name="username" class="form-control" required autofocus>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label>Password
+                                <input type="password" name="password" class="form-control" required>
+                            </label>
+                        </div>
+                        <button class="btn btn-primary">Log in</button>
+                    </form>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </body>
+
+</html>

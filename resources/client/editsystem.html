@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+    <head>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Steve's Retro System Inventory</title>
+
+        <link rel="shortcut icon" href="/client/favicon.ico" type="image/x-icon">
+
+        <script src="/client/js/jquery-3.3.1.min.js"></script>
+        <script src="/client/js/popper.min.js"></script>
+        <script src="/client/js/bootstrap.min.js"></script>
+        <script src="/client/js/js.cookie.min.js"></script>
+        <script src="/client/js/querystring.js"></script>
+
+        <link href="/client/css/bootstrap.min.css" rel="stylesheet">
+
+        <script src="/client/js/admin.js"></script>
+        <script src="/client/js/editsystem.js"></script>
+
+    </head>
+
+    <body class="bg-dark" onload="pageLoad()">
+
+        <div class="container bg-white pb-4">
+
+            <div class="py-4 float-right"><button class="btn btn-sm btn-warning" id="logout">Log out</button></div>
+            <div class="py-4"><a class="btn btn-sm btn-secondary" href="/client/index.html">Back to systems</a></div>
+
+            <h1 class="text-center p-4">System Edit</h1>
+
+            <div class="float-right">
+                <button class="btn btn-danger btn-sm" id="delete" style="visibility: hidden">Delete</button>
+            </div>
+
+            <form id="systemForm">
+                <div class="form-group">
+                    <label class="pr-4">Name
+                        <input type="text" class="form-control" name="name">
+                    </label>
+                    <label class="pr-4">Manufacturer
+                        <select class="form-control" name="manufacturerId">
+                        </select>
+                    </label>
+                    <label class="pr-4">Media Type
+                        <input type="text" class="form-control" name="mediaType">
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="pr-4">Year
+                        <input type="text" class="form-control" name="year">
+                    </label>
+                    <label class="pr-4">Sales
+                        <input type="text" class="form-control" name="sales">
+                    </label>
+                    <label class="pr-4">Handheld
+                        <input type="checkbox" class="form-control" name="handheld">
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="pr-4">Image URL
+                        <select class="form-control" name="imageURL">
+                        </select>
+                    </label>
+                    <label class="pr-4">Notes
+                        <input type="text" class="form-control" name="notes">
+                    </label>
+                    <div class="float-right pt-4"><button type="submit" class="btn btn-sm btn-success">Save</button></div>
+                </div>
+                <div class="p-2 text-center">
+                    <img id="chosenImage" width="240;" src="/client/img/-none-.png" />
+                </div>
+            </form>
+
+        </div>
+
+    </body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Steve's Retro System Inventory</title>
+
+    <link rel="shortcut icon" href="/client/favicon.ico" type="image/x-icon">
+
+    <script src="/client/js/jquery-3.3.1.min.js"></script>
+    <script src="/client/js/popper.min.js"></script>
+    <script src="/client/js/bootstrap.min.js"></script>
+    <script src="/client/js/js.cookie.min.js"></script>
+    <script src="/client/js/querystring.js"></script>
+
+    <link href="/client/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="/client/js/admin.js"></script>
+    <script src="/client/js/config.js"></script>
+
+</head>
+
+<body class="bg-dark" onload="pageLoad()">
+
+    <div class="container bg-white pb-4">
+
+        <div class="py-4 float-right"><button class="btn btn-sm btn-warning" id="logout">Log out</button></div>
+        <div class="py-4"><a class="btn btn-sm btn-secondary" href="/client/index.html">Back to systems</a></div>
+
+        <h1 class="text-center p-4">Configuration</h1>
+
+        <div class="pb-4 border-bottom">
+            <div class="p-3 float-right">
+                <a id="addAdmin" class="btn btn-sm btn-primary mt-3">Add new administrator</a>
+            </div>
+            <h3 class="py-4">Administrators</h3>
+            <div id="administrators"></div>
+        </div>
+
+        <div class="pb-4 border-bottom">
+            <div class="p-3 float-right">
+                <a id="addManufacturer" class="btn btn-sm btn-primary mt-3">Add new manufacturer</a>
+            </div>
+            <h3 class="py-4">System Manufacturers</h3>
+            <div id="manufacturers"></div>
+        </div>
+
+        <div class="pb-4 border-bottom">
+            <div class="p-3 float-right">
+                <a id="addCategory" class="btn btn-sm btn-primary mt-3">Add new category</a>
+            </div>
+            <h3 class="py-4">Accessory Categories</h3>
+            <div id="categories"></div>
+        </div>
+
+        <div class="pt-4">
+            <h3 class="pb-2">Images</h3>
+            <div class="p-3">
+                <form enctype="multipart/form-data" id="imageUploadForm">
+                    <div class="float-right">
+                        <button type="submit" class="btn btn-sm btn-primary">Upload new image</button>
+                    </div>
+                    <input type="file" name="file" id="file" />
+                    <div><small class="font-italic">Please note, images will be resized to 800x600.</small></div>
+                </form>
+                <h4 id="uploading" class="text-danger" style="display:none">Uploading...</h4>
+            </div>
+            <div id="images"></div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
