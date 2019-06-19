@@ -23,7 +23,7 @@ function pageLoad() {
           if (params['systemId'] !== undefined) {
               document.querySelector("[name='systemId']").value = params['systemId'];
           }
-      }$
+      }
 
       resetForm();
 
@@ -64,8 +64,7 @@ function resetForm() {
 
     const form = document.getElementById('softwareForm');
 
-    form.unbind("submit");
-    form.submit(event => {
+    form.addEventListener("submit", event => {
         event.preventDefault();
 
         let formData = new FormData(form);
