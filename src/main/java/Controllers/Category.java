@@ -18,10 +18,14 @@ import java.sql.SQLException;
 @Path("category/")
 public class Category {
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @GET
     @Path("list")
     @Produces(MediaType.APPLICATION_JSON)
-    public String listCategoriesForConfig(@CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+    public String listCategoriesForConfig() {
         String error;
         try {
 
@@ -52,7 +56,11 @@ public class Category {
         return "{'error': '" + error + "'}";
     }
 
-    public static JSONArray listCategories(@CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) throws SQLException {
+
+    /*-------------------------------------------------------
+    ...
+    ------------------------------------------------------*/
+    public static JSONArray listCategories() throws SQLException {
 
         System.out.println("/software/list - Getting all categories from database");
 
@@ -74,15 +82,19 @@ public class Category {
 
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST
     @Path("new")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public String addCategory(  @FormDataParam("name") String name,
-                                @CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+                                @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/category/add/" + name + " - Adding category to database");
+        System.out.println("/category/add name=" + name + " - Adding category to database");
 
         try {
 
@@ -106,15 +118,19 @@ public class Category {
 
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST
     @Path("rename")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public String renameCategory(  @FormDataParam("id") String id, @FormDataParam("name") String name,
-                                   @CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+                                   @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/category/rename/" + id + " - Renaming category in database");
+        System.out.println("/category/rename id=" + id + " name=" + name + " - Renaming category in database");
 
         try {
 
@@ -139,15 +155,19 @@ public class Category {
 
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST
     @Path("delete")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public String deleteCategory(  @FormDataParam("id") String id,
-                                   @CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+    public String deleteCategory(@FormDataParam("id") String id,
+                                   @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/category/delete/" + id + " - Deleting category from database");
+        System.out.println("/category/delete id=" + id + " - Deleting category from database");
 
         try {
 

@@ -1,6 +1,7 @@
 package Controllers;
 
 import Server.Main;
+import com.sun.jersey.multipart.FormDataParam;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -20,6 +21,10 @@ import static Controllers.RetroSystem.getSystemNameFromId;
 @Path("software/")
 public class Software {
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     private static JSONObject softwareFromResultSet(ResultSet results) throws SQLException {
 
@@ -43,12 +48,16 @@ public class Software {
 
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @GET
     @Path("list/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String listSoftware(@PathParam("id") int id, @CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+    public String listSoftware(@PathParam("id") int id) {
 
-        System.out.println("/software/list - Getting all software from database");
+        System.out.println("/software/list/" + id + " - Getting all software from database");
 
         String error;
         JSONObject response = new JSONObject();
@@ -86,10 +95,14 @@ public class Software {
 
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @GET
     @Path("get/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getSoftware(@PathParam("id") int id, @CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+    public String getSoftware(@PathParam("id") int id) {
 
         System.out.println("/software/get/"+ id + " - Getting software details from database");
 
@@ -136,20 +149,24 @@ public class Software {
         return "{'error': '" + error + "'}";
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST
-    @Path("save/{id}")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Path("save")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public String saveSoftware( @PathParam("id") int id,
-                                @FormParam("systemId") int systemId,
-                                @FormParam("name") String name,
-                                @FormParam("sales") String sales,
-                                @FormParam("year") String year,
-                                @FormParam("imageURL") String imageURL,
-                                @CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+    public String saveSoftware( @FormDataParam("id") int id,
+                                @FormDataParam("systemId") int systemId,
+                                @FormDataParam("name") String name,
+                                @FormDataParam("sales") String sales,
+                                @FormDataParam("year") String year,
+                                @FormDataParam("imageURL") String imageURL,
+                                @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/software/save/" + id + " - Saving softare to database");
+        System.out.println("/software/save id=" + id + " - Saving software to database");
 
         try {
 
@@ -191,13 +208,17 @@ public class Software {
 
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @POST
-    @Path("delete/{id}")
+    @Path("delete")
     @Produces(MediaType.APPLICATION_JSON)
-    public String deleteSoftware(@PathParam("id") int id,
-                                 @CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+    public String deleteSoftware(@FormDataParam("id") int id,
+                                 @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/software/delete/" + id + " - Deleting software from database.");
+        System.out.println("/software/delete id=" + id + " - Deleting software from database.");
 
         try {
 

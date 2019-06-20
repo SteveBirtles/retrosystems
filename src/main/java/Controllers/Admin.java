@@ -19,10 +19,14 @@ import java.util.UUID;
 @Path("admin/")
 public class Admin {
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @GET
     @Path("list")
     @Produces(MediaType.APPLICATION_JSON)
-    public String listAdminsForConfig(@CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+    public String listAdminsForConfig(@CookieParam("sessionToken") Cookie sessionCookie) {
         String error;
         try {
 
@@ -52,6 +56,9 @@ public class Admin {
         return "{'error': '" + error + "'}";
     }
 
+    /*-------------------------------------------------------
+    ...
+    ------------------------------------------------------*/
     public static String validateSessionCookie(Cookie sessionCookie) {
         if (sessionCookie != null) {
             String token = sessionCookie.getValue();
@@ -73,13 +80,17 @@ public class Admin {
         return null;
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @POST
     @Path("login")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public String attemptLogin(@FormDataParam("username") String username,
                                @FormDataParam("password") String password,
-                               @CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+                               @CookieParam("sessionToken") Cookie sessionCookie) {
 
         System.out.println("/user/login - Attempt by " + username);
 
@@ -116,10 +127,14 @@ public class Admin {
 
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @GET
     @Path("check")
     @Produces(MediaType.APPLICATION_JSON)
-    public String checkLogin(@CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+    public String checkLogin(@CookieParam("sessionToken") Cookie sessionCookie) {
 
         System.out.println("/admin/check - Checking user against database");
 
@@ -133,9 +148,13 @@ public class Admin {
         }
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @POST
     @Path("logout")
-    public void logout(@CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+    public void logout(@CookieParam("sessionToken") Cookie sessionCookie) {
 
         System.out.println("/admin/logout - Logging out user");
 
@@ -153,16 +172,19 @@ public class Admin {
 
     }
 
-
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST
-    @Path("new/{username}")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Path("new")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public String addAdmin(  @PathParam("username") String username,
-                             @CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+    public String addAdmin(  @FormDataParam("username") String username,
+                             @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/admin/new/" + username + " - Adding new admin to database");
+        System.out.println("/admin/ username=" + username + " - Adding new admin to database");
 
         try {
 
@@ -186,16 +208,20 @@ public class Admin {
 
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST
-    @Path("reset/{username}")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Path("reset")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public String resetPassword(  @PathParam("username") String username,
-                                  @FormParam("password") String password,
-                                  @CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+    public String resetPassword(  @FormDataParam("username") String username,
+                                  @FormDataParam("password") String password,
+                                  @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/admin/reset/" + username + " - Resetting password for user in database");
+        System.out.println("/admin/reset username=" + username + " - Resetting password for user in database");
 
         try {
 
@@ -220,16 +246,20 @@ public class Admin {
 
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST
-    @Path("rename/{oldUsername}")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Path("rename")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public String renameAdmin( @PathParam("oldUsername") String oldUsername,
-                               @FormParam("newUsername") String newUsername,
-                               @CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+    public String renameAdmin( @FormDataParam("oldUsername") String oldUsername,
+                               @FormDataParam("newUsername") String newUsername,
+                               @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/admin/reset/" + oldUsername + " - Renaming user in database");
+        System.out.println("/admin/reset oldUsername=" + oldUsername + " newUsername=" + newUsername + " - Renaming user in database");
 
         try {
 
@@ -254,15 +284,19 @@ public class Admin {
 
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST
-    @Path("delete/{username}")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Path("delete")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public String deleteAdmin( @PathParam("username") String username,
-                                 @CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+    public String deleteAdmin( @FormDataParam("username") String username,
+                                 @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/admin/delete/" + username + " - Deleting user in database");
+        System.out.println("/admin/delete username=" + username + " - Deleting user from database");
 
         try {
 

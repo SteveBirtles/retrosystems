@@ -1,6 +1,7 @@
 package Controllers;
 
 import Server.Main;
+import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -20,6 +21,10 @@ import static Controllers.Manufacturer.*;
 @Path("system/")
 public class RetroSystem {
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     private static JSONObject systemFromResultSet(ResultSet results) throws SQLException {
 
@@ -45,6 +50,9 @@ public class RetroSystem {
 
     }
 
+    /*-------------------------------------------------------
+    ...
+    ------------------------------------------------------*/
     public static String getSystemNameFromId(int id) throws SQLException {
 
         PreparedStatement systemStatement = Main.db.prepareStatement(
@@ -67,10 +75,14 @@ public class RetroSystem {
 
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @GET
     @Path("list")
     @Produces(MediaType.APPLICATION_JSON)
-    public String listSystems(@CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+    public String listSystems() {
 
         System.out.println("/system/list - Getting all systems from database");
 
@@ -90,7 +102,7 @@ public class RetroSystem {
                 systemList.add(systemFromResultSet(results));
             }
             response.put("systems", systemList);
-            response.put("manufacturers", listManufacturers(null, null));
+            response.put("manufacturers", listManufacturers());
             response.put("images", allImages());
 
             return response.toString();
@@ -106,11 +118,15 @@ public class RetroSystem {
 
     }
 
-
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @GET
     @Path("get/{id}")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public String getSystem(@PathParam("id") int id, @CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+    public String getSystem(@PathParam("id") int id) {
 
         System.out.println("/system/get/" + id + " - Getting system details from database");
 
@@ -143,7 +159,7 @@ public class RetroSystem {
 
             }
 
-            response.put("manufacturers", listManufacturers(null, null));
+            response.put("manufacturers", listManufacturers());
             response.put("images", allImages());
 
             return response.toString();
@@ -159,25 +175,29 @@ public class RetroSystem {
 
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST
-    @Path("save/{id}")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Path("save")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public String saveSystem(@PathParam("id") int id,
-                             @FormParam("manufacturerId") int manufacturerId,
-                             @FormParam("name") String name,
-                             @FormParam("mediaType") String mediaType,
-                             @FormParam("year") String year,
-                             @FormParam("sales") String sales,
-                             @DefaultValue("false") @FormParam("handheld") String handheld,
-                             @FormParam("imageURL") String imageURL,
-                             @FormParam("notes") String notes,
-                             @CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+    public String saveSystem(@FormDataParam("id") int id,
+                             @FormDataParam("manufacturerId") int manufacturerId,
+                             @FormDataParam("name") String name,
+                             @FormDataParam("mediaType") String mediaType,
+                             @FormDataParam("year") String year,
+                             @FormDataParam("sales") String sales,
+                             @DefaultValue("false") @FormDataParam("handheld") String handheld,
+                             @FormDataParam("imageURL") String imageURL,
+                             @FormDataParam("notes") String notes,
+                             @CookieParam("sessionToken") Cookie sessionCookie) {
 
         try {
 
-            System.out.println("/system/save/" + id + " - Saving system to database.");
+            System.out.println("/system/save id=" + id + " - Saving system to database.");
 
             String currentUsername = Admin.validateSessionCookie(sessionCookie);
             if (currentUsername == null) {
@@ -219,13 +239,16 @@ public class RetroSystem {
         }
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @POST
-    @Path("delete/{id}")
+    @Path("delete")
     @Produces(MediaType.APPLICATION_JSON)
-    public String deleteSystem(@PathParam("id") int id,
-                               @CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+    public String deleteSystem(@FormDataParam("id") int id, @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/system/delete/" + id + " - Deleting system from database.");
+        System.out.println("/system/delete id=" + id + " - Deleting system from database.");
 
         try {
 

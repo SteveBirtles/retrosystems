@@ -18,10 +18,14 @@ import java.sql.SQLException;
 @Path("manufacturer/")
 public class Manufacturer {
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @GET
     @Path("list")
     @Produces(MediaType.APPLICATION_JSON)
-    public String listManufacturersForConfig(@CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+    public String listManufacturersForConfig() {
         String error;
         try {
 
@@ -52,7 +56,11 @@ public class Manufacturer {
         return "{'error': '" + error + "'}";
     }
 
-    public static JSONArray listManufacturers(@CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) throws SQLException {
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
+    public static JSONArray listManufacturers() throws SQLException {
 
         System.out.println("/manufacturer/list - Getting all manufacturers from database");
 
@@ -74,13 +82,17 @@ public class Manufacturer {
 
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST
     @Path("new")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public String addManufacturer(  @FormDataParam("name") String name,
-                                    @CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+                                    @CookieParam("sessionToken") Cookie sessionCookie) {
 
         System.out.println("/manufacturer/new name=" + name + " - Adding manufacturer to database");
 
@@ -106,13 +118,17 @@ public class Manufacturer {
 
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST
     @Path("rename")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public String renameManufacturer(  @FormDataParam("id") String id, @FormDataParam("name") String name,
-                                       @CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+                                       @CookieParam("sessionToken") Cookie sessionCookie) {
 
         System.out.println("/manufacturer/rename id=" + id + " name=" + name + " - Renaming manufacturer in database");
 
@@ -139,15 +155,19 @@ public class Manufacturer {
 
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST
     @Path("delete")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public String deleteManufacturer(  @FormDataParam("id") String id,
-                                       @CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+                                       @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/manufacturer/delete/" + id + " - Deleting manufacturer from database");
+        System.out.println("/manufacturer/delete id=" + id + " - Deleting manufacturer from database");
 
         try {
 

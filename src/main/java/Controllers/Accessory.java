@@ -22,6 +22,9 @@ import static Controllers.RetroSystem.getSystemNameFromId;
 @Path("accessory/")
 public class Accessory {
 
+    /*-------------------------------------------------------
+    ...
+    ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     private static JSONObject accessoryFromResultSet(ResultSet results) throws SQLException {
 
@@ -45,10 +48,14 @@ public class Accessory {
 
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @GET
     @Path("list/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String listAccessories(@PathParam("id") int id, @CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+    public String listAccessories(@PathParam("id") int id) {
 
         System.out.println("/accessory/list - Getting all accessories from database");
 
@@ -74,7 +81,7 @@ public class Accessory {
             }
 
             response.put("accessories", accessoryList);
-            response.put("categories", listCategories(null, null));
+            response.put("categories", listCategories());
 
             return response.toString();
 
@@ -89,10 +96,14 @@ public class Accessory {
 
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @GET
     @Path("get/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public String getAccessory(@PathParam("id") int id, @CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+    public String getAccessory(@PathParam("id") int id) {
 
         System.out.println("/accessory/get/" + id + " - Getting accessory details from database");
 
@@ -125,7 +136,7 @@ public class Accessory {
                 }
             }
 
-            response.put("categories", listCategories(null, null));
+            response.put("categories", listCategories());
             response.put("images", allImages());
 
             return response.toString();
@@ -140,6 +151,10 @@ public class Accessory {
         return "{'error': '" + error + "'}";
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST
     @Path("save")
@@ -152,9 +167,9 @@ public class Accessory {
                                   @FormDataParam("quantity") int quantity,
                                   @DefaultValue("false") @FormDataParam("thirdParty") String thirdParty,
                                   @FormDataParam("imageURL") String imageURL,
-                                  @CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+                                  @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/accessory/save/" + id + " - Saving accessory details from database");
+        System.out.println("/accessory/save id=" + id + " - Saving accessory to database");
 
         try {
 
@@ -197,13 +212,17 @@ public class Accessory {
 
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @POST
     @Path("delete")
     @Produces(MediaType.APPLICATION_JSON)
     public String deleteSoftware(@FormDataParam("id") int id,
-                                 @CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+                                 @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/accessory/delete - Accessory " + id);
+        System.out.println("/accessory/delete id=" + id + " - Deleting Software from database");
 
         try {
 

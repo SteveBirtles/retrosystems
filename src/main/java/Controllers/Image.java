@@ -25,6 +25,10 @@ import java.util.Comparator;
 @Path("image/")
 public class Image {
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @SuppressWarnings("unchecked")
     public static ArrayList<String> allImages() {
         ArrayList<String> images = new ArrayList<>();
@@ -52,10 +56,14 @@ public class Image {
         return images;
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @GET
     @Path("list")
     @Produces(MediaType.APPLICATION_JSON)
-    public String listImages(@CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+    public String listImages(@CookieParam("sessionToken") Cookie sessionCookie) {
 
         System.out.println("/image/list - Getting all image files from folder");
 
@@ -130,13 +138,16 @@ public class Image {
 
     }
 
-
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @POST
     @Path("upload")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public String uploadImage(@FormDataParam("file") InputStream fileInputStream, @FormDataParam("file") FormDataContentDisposition formData,
-                              @CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+                              @CookieParam("sessionToken") Cookie sessionCookie) {
 
         System.out.println("/image/upload - Request to upload image " + formData.getFileName());
 
@@ -180,15 +191,19 @@ public class Image {
 
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @POST
-    @Path("rename/{oldFilename}")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Path("rename")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public String renameImageFile(@PathParam("oldFilename") String oldFilename,
-                                  @FormParam("newFilename") String newFilename,
-                                  @CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+    public String renameImageFile(@FormDataParam("oldFilename") String oldFilename,
+                                  @FormDataParam("newFilename") String newFilename,
+                                  @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/image/rename/" + oldFilename + " - Renaming image");
+        System.out.println("/image/rename oldFilename=" + oldFilename + " newFilename=" + newFilename + " - Renaming image");
 
         try {
 
@@ -217,15 +232,19 @@ public class Image {
 
     }
 
+    /*-------------------------------------------------------
+    The API request handler for ...
+    ...
+    ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST
-    @Path("delete/{filename}")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Path("delete")
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public String deleteImageFile(  @PathParam("filename") String filename,
-                                    @CookieParam("sessionToken") Cookie sessionCookie, @Context HttpServletRequest request) {
+    public String deleteImageFile(  @FormDataParam("filename") String filename,
+                                    @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/image/delete/" + filename + " - Deleting image");
+        System.out.println("/image/delete filename=" + filename + " - Deleting image");
 
         try {
 
