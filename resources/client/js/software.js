@@ -1,3 +1,23 @@
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
+function pageLoad() {
+
+    let currentPage = window.location.href;
+    Cookies.set("breadcrumb", currentPage);
+
+    let params = getQueryStringParameters();
+    let id = params['id'];
+
+    updateSoftwareList(id);
+
+    document.getElementById("new").setAttribute("href", "/client/editsoftware.html?id=-1&systemId=" + id)
+
+}
+
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function updateSoftwareList(id) {
 
     fetch('/software/list/' + id, {method: 'get'}
@@ -43,19 +63,5 @@ function updateSoftwareList(id) {
 
 
     });
-
-}
-
-function pageLoad() {
-
-    let currentPage = window.location.href;
-    Cookies.set("breadcrumb", currentPage);
-
-    let params = getQueryStringParameters();
-    let id = params['id'];
-
-    updateSoftwareList(id);
-
-    document.getElementById("new").setAttribute("href", "/client/editsoftware.html?id=-1&systemId=" + id)
 
 }

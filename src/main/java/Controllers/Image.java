@@ -25,10 +25,6 @@ import java.util.Comparator;
 @Path("image/")
 public class Image {
 
-    /*-------------------------------------------------------
-    The API request handler for ...
-    ...
-    ------------------------------------------------------*/
     @SuppressWarnings("unchecked")
     public static ArrayList<String> allImages() {
         ArrayList<String> images = new ArrayList<>();
@@ -57,8 +53,9 @@ public class Image {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /image/list
+        FormDataParams: none
+        Cookies: none
     ------------------------------------------------------*/
     @GET
     @Path("list")
@@ -139,8 +136,9 @@ public class Image {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /image/upload
+        FormDataParams: file (upload)
+        Cookies: sessionToken
     ------------------------------------------------------*/
     @POST
     @Path("upload")
@@ -192,8 +190,9 @@ public class Image {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /image/rename
+        FormDataParams: oldFilename, newFilename
+        Cookies: sessionToken
     ------------------------------------------------------*/
     @POST
     @Path("rename")
@@ -233,8 +232,9 @@ public class Image {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /image/delete
+        FormDataParams: filename
+        Cookies: sessionToken
     ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST

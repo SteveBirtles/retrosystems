@@ -21,10 +21,6 @@ import static Controllers.Manufacturer.*;
 @Path("system/")
 public class RetroSystem {
 
-    /*-------------------------------------------------------
-    The API request handler for ...
-    ...
-    ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     private static JSONObject systemFromResultSet(ResultSet results) throws SQLException {
 
@@ -76,8 +72,9 @@ public class RetroSystem {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /system/list
+        FormDataParams: none
+        Cookies: none
     ------------------------------------------------------*/
     @GET
     @Path("list")
@@ -119,8 +116,9 @@ public class RetroSystem {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /system/get/{id}
+        FormDataParams: none
+        Cookies: none
     ------------------------------------------------------*/
     @GET
     @Path("get/{id}")
@@ -176,8 +174,9 @@ public class RetroSystem {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /system/save
+        FormDataParams: id, manufacturerId, name, mediaType, year, sales, handheld, imageURL, notes
+        Cookies: sessionToken
     ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST
@@ -240,8 +239,9 @@ public class RetroSystem {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /system/delete
+        FormDataParams: id
+        Cookies: sessionToken
     ------------------------------------------------------*/
     @POST
     @Path("delete")

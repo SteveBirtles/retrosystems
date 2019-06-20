@@ -19,8 +19,9 @@ import java.sql.SQLException;
 public class Manufacturer {
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /manufacturer/list
+        FormDataParams: none
+        Cookies: none
     ------------------------------------------------------*/
     @GET
     @Path("list")
@@ -57,8 +58,9 @@ public class Manufacturer {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /manufacturer/list
+        FormDataParams: none
+        Cookies: none
     ------------------------------------------------------*/
     public static JSONArray listManufacturers() throws SQLException {
 
@@ -83,8 +85,9 @@ public class Manufacturer {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /manufacturer/new
+        FormDataParams: name
+        Cookies: sessionToken
     ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST
@@ -119,8 +122,9 @@ public class Manufacturer {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /manufacturer/rename
+        FormDataParams: id, name
+        Cookies: sessionToken
     ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST
@@ -156,8 +160,9 @@ public class Manufacturer {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /manufacturer/delete
+        FormDataParams: id
+        Cookies: sessionToken
     ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST

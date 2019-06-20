@@ -20,8 +20,9 @@ import java.util.UUID;
 public class Admin {
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /admin/list
+        FormDataParams: none
+        Cookies: sessionToken
     ------------------------------------------------------*/
     @GET
     @Path("list")
@@ -81,16 +82,16 @@ public class Admin {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /admin/login
+        FormDataParams: username, password
+        Cookies: none
     ------------------------------------------------------*/
     @POST
     @Path("login")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public String attemptLogin(@FormDataParam("username") String username,
-                               @FormDataParam("password") String password,
-                               @CookieParam("sessionToken") Cookie sessionCookie) {
+                               @FormDataParam("password") String password) {
 
         System.out.println("/user/login - Attempt by " + username);
 
@@ -128,8 +129,9 @@ public class Admin {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /admin/check
+        FormDataParams: none
+        Cookies: sessionToken
     ------------------------------------------------------*/
     @GET
     @Path("check")
@@ -149,8 +151,9 @@ public class Admin {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /admin/logout
+        FormDataParams: none
+        Cookies: sessionToken
     ------------------------------------------------------*/
     @POST
     @Path("logout")
@@ -173,8 +176,9 @@ public class Admin {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /admin/new
+        FormDataParams: username
+        Cookies: sessionToken
     ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST
@@ -209,8 +213,9 @@ public class Admin {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /admin/reset
+        FormDataParams: username, password
+        Cookies: sessionToken
     ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST
@@ -247,8 +252,9 @@ public class Admin {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /admin/rename
+        FormDataParams: oldUsername, newUsername
+        Cookies: sessionToken
     ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST
@@ -285,8 +291,9 @@ public class Admin {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /admin/delete
+        FormDataParams: username
+        Cookies: sessionToken
     ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST

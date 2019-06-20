@@ -22,9 +22,6 @@ import static Controllers.RetroSystem.getSystemNameFromId;
 @Path("accessory/")
 public class Accessory {
 
-    /*-------------------------------------------------------
-    ...
-    ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     private static JSONObject accessoryFromResultSet(ResultSet results) throws SQLException {
 
@@ -49,15 +46,16 @@ public class Accessory {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /accessory/list/{id}
+        FormDataParams: none
+        Cookies: none
     ------------------------------------------------------*/
     @GET
     @Path("list/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public String listAccessories(@PathParam("id") int id) {
 
-        System.out.println("/accessory/list - Getting all accessories from database");
+        System.out.println("/accessory/list/" + id + " - Getting all accessories from database");
 
         String error;
         JSONObject response = new JSONObject();
@@ -97,8 +95,9 @@ public class Accessory {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /accessory/get/{id}
+        FormDataParams: none
+        Cookies: none
     ------------------------------------------------------*/
     @GET
     @Path("get/{id}")
@@ -152,8 +151,9 @@ public class Accessory {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /accessory/save
+        FormDataParams: id, categoryId, systemId, description, quantity, thirdParty, imageURL
+        Cookies: sessionToken
     ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST
@@ -213,8 +213,9 @@ public class Accessory {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /accessory/delete
+        FormDataParams: id
+        Cookies: sessionToken
     ------------------------------------------------------*/
     @POST
     @Path("delete")

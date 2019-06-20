@@ -1,5 +1,8 @@
 let id = -1;
 
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function pageLoad() {
 
     let currentPage = window.location.href;
@@ -52,6 +55,9 @@ function pageLoad() {
 
 }
 
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function addManufacturer() {
 
     let manufacturer = prompt("Please enter manufacturer name");
@@ -72,6 +78,9 @@ function addManufacturer() {
 
 }
 
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function addCategory() {
 
     let category = prompt("Please enter category name");
@@ -94,6 +103,9 @@ function addCategory() {
 
 }
 
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function addAdmin() {
 
     let admin = prompt("Please enter admin name");
@@ -118,6 +130,9 @@ function addAdmin() {
 
 }
 
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function resetPassword(event) {
 
     let admin = event.target.getAttribute("data-username");
@@ -142,6 +157,9 @@ function resetPassword(event) {
 
 }
 
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function renameAdmin(event) {
 
     let oldUsername = event.target.getAttribute("data-username");
@@ -168,6 +186,9 @@ function renameAdmin(event) {
 
 }
 
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function renameManufacturer(event) {
 
     let id = event.target.getAttribute("data-id");
@@ -194,6 +215,9 @@ function renameManufacturer(event) {
 
 }
 
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function renameCategory(event) {
 
     let id = event.target.getAttribute("data-id");
@@ -219,6 +243,9 @@ function renameCategory(event) {
 
 }
 
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function deleteAdmin(event) {
 
     let admin = event.target.getAttribute("data-username");
@@ -245,6 +272,9 @@ function deleteAdmin(event) {
 
 }
 
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function deleteManufacturer(event) {
 
     let id = event.target.getAttribute("data-id");
@@ -278,7 +308,9 @@ function deleteManufacturer(event) {
 
 }
 
-
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function deleteCategory(event) {
 
     let id = event.target.getAttribute("data-id");
@@ -311,6 +343,9 @@ function deleteCategory(event) {
 
 }
 
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function renameImageFile(event) {
 
     let oldFilename = event.target.getAttribute("data-filename");
@@ -336,7 +371,9 @@ function renameImageFile(event) {
 
 }
 
-
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function deleteImageFile(event) {
 
     let filename = event.target.getAttribute("data-filename");
@@ -363,6 +400,9 @@ function deleteImageFile(event) {
 
 }
 
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function loadManufacturers() {
 
     fetch('/manufacturer/list', {method: 'get'})
@@ -411,6 +451,9 @@ function loadManufacturers() {
 
 }
 
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function loadCategories() {
 
     fetch( '/category/list', {method: 'get'})
@@ -459,6 +502,9 @@ function loadCategories() {
 
 }
 
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function loadImages() {
 
     fetch(  '/image/list',{method: 'get'})
@@ -511,6 +557,9 @@ function loadImages() {
 
 }
 
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function loadAdmins() {
 
     fetch('/admin/list', {method: 'get'}

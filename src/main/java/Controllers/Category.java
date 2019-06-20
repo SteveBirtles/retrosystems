@@ -19,8 +19,9 @@ import java.sql.SQLException;
 public class Category {
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /category/list
+        FormDataParams: none
+        Cookies: none
     ------------------------------------------------------*/
     @GET
     @Path("list")
@@ -83,8 +84,9 @@ public class Category {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /category/new
+        FormDataParams: name
+        Cookies: sessionToken
     ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST
@@ -119,8 +121,9 @@ public class Category {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /category/rename
+        FormDataParams: id, name
+        Cookies: sessionToken
     ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST
@@ -156,8 +159,9 @@ public class Category {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /category/delete
+        FormDataParams: id
+        Cookies: sessionToken
     ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST

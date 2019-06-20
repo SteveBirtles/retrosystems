@@ -1,5 +1,8 @@
 let id = -1;
 
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function pageLoad() {
 
     let lastPage =  Cookies.get("breadcrumb");
@@ -35,6 +38,9 @@ function pageLoad() {
 
 }
 
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function loadSoftware() {
 
     fetch('/software/get/' + id, {method: 'get'}
@@ -60,6 +66,9 @@ function loadSoftware() {
 
 }
 
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function resetForm() {
 
     const form = document.getElementById('softwareForm');
@@ -70,7 +79,7 @@ function resetForm() {
         let formData = new FormData(form);
         formData.append("id", id);
 
-        fetch('/software/save/', {method: 'post', body: formData}
+        fetch('/software/save', {method: 'post', body: formData}
         ).then(response => response.json()
         ).then(data => {
 
@@ -83,6 +92,9 @@ function resetForm() {
     });
 }
 
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function resetDeleteButton() {
 
     document.getElementById('delete').style.visibility = 'visible';
@@ -94,7 +106,7 @@ function resetDeleteButton() {
                 let formData = new FormData();
                 formData.append("id", id);
 
-                fetch('/software/delete/', {method: 'post', body: formData}
+                fetch('/software/delete', {method: 'post', body: formData}
                 ).then(response => response.json()
                 ).then(data => {
 

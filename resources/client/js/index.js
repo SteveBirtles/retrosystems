@@ -1,3 +1,13 @@
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
+function pageLoad() {
+    updateSystemList();
+}
+
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function updateSystemList() {
 
     document.getElementById("systemSort").addEventListener("change", updateSystemList);

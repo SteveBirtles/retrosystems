@@ -21,10 +21,6 @@ import static Controllers.RetroSystem.getSystemNameFromId;
 @Path("software/")
 public class Software {
 
-    /*-------------------------------------------------------
-    The API request handler for ...
-    ...
-    ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     private static JSONObject softwareFromResultSet(ResultSet results) throws SQLException {
 
@@ -49,8 +45,9 @@ public class Software {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /software/list/{id}
+        FormDataParams: none
+        Cookies: none
     ------------------------------------------------------*/
     @GET
     @Path("list/{id}")
@@ -96,8 +93,9 @@ public class Software {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /software/get/{id}
+        FormDataParams: none
+        Cookies: none
     ------------------------------------------------------*/
     @GET
     @Path("get/{id}")
@@ -150,8 +148,9 @@ public class Software {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /software/save
+        FormDataParams: id, systemId, name, sales, year, imageURL
+        Cookies: sessionToken
     ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     @POST
@@ -209,8 +208,9 @@ public class Software {
     }
 
     /*-------------------------------------------------------
-    The API request handler for ...
-    ...
+    The API request handler for /software/delete
+        FormDataParams: id
+        Cookies: sessionToken
     ------------------------------------------------------*/
     @POST
     @Path("delete")

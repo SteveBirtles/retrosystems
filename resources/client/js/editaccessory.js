@@ -1,5 +1,8 @@
 let id = -1;
 
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function pageLoad() {
 
     let lastPage =  Cookies.get("breadcrumb");
@@ -35,6 +38,9 @@ function pageLoad() {
 
 }
 
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function loadAccessory() {
 
     fetch('/accessory/get/' + id, {method: 'get'}
@@ -65,7 +71,9 @@ function loadAccessory() {
 
 }
 
-
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function resetForm() {
 
     const form = document.getElementById('accessoryForm');
@@ -90,7 +98,9 @@ function resetForm() {
     });
 }
 
-
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function resetDeleteButton() {
 
     document.getElementById('delete').style.visibility = 'visible';

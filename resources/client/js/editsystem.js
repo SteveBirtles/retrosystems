@@ -1,5 +1,8 @@
 let id = -1;
 
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function pageLoad() {
 
     let currentPage = window.location.href;
@@ -28,6 +31,9 @@ function pageLoad() {
 
 }
 
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function loadSystem() {
 
     fetch('/system/get/' + id, {method: 'get'}
@@ -61,7 +67,9 @@ function loadSystem() {
 
 }
 
-
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function resetForm() {
 
     const form = document.getElementById('systemForm');
@@ -86,7 +94,9 @@ function resetForm() {
     });
 }
 
-
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function resetDeleteButton() {
 
     document.getElementById('delete').style.visibility = 'visible';

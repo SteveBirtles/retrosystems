@@ -1,3 +1,23 @@
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
+function pageLoad() {
+
+    let currentPage = window.location.href;
+    Cookies.set("breadcrumb", currentPage);
+
+    let params = getQueryStringParameters();
+    let id = params['id'];
+
+    updateAccessoriesList(id);
+
+    document.getElementById("new").setAttribute("href", "/client/editaccessory.html?id=-1&systemId=" + id)
+
+}
+
+/*-------------------------------------------------------
+  ...
+  ------------------------------------------------------*/
 function updateAccessoriesList(id) {
 
     fetch('/accessory/list/' + id, {method: 'get'}
@@ -49,20 +69,5 @@ function updateAccessoriesList(id) {
         document.getElementById('system').innerHTML = data.systemName;
 
     });
-
-}
-
-
-function pageLoad() {
-
-    let currentPage = window.location.href;
-    Cookies.set("breadcrumb", currentPage);
-
-    let params = getQueryStringParameters();
-    let id = params['id'];
-
-    updateAccessoriesList(id);
-
-    document.getElementById("new").setAttribute("href", "/client/editaccessory.html?id=-1&systemId=" + id)
 
 }
