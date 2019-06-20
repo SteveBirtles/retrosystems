@@ -7,9 +7,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import java.awt.*;

@@ -5,9 +5,7 @@ import org.glassfish.jersey.media.multipart.FormDataParam;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import java.sql.PreparedStatement;
@@ -15,7 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static Controllers.Image.allImages;
-import static Controllers.Manufacturer.*;
+import static Controllers.Manufacturer.listManufacturers;
 
 @SuppressWarnings("unchecked")
 @Path("system/")
