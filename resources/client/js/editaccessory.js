@@ -1,7 +1,7 @@
 let id = -1;
 
 /*-------------------------------------------------------
-  ...
+  This function runs when editaccessory.html is loaded.
   ------------------------------------------------------*/
 function pageLoad() {
 

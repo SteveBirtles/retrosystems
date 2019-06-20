@@ -19,6 +19,11 @@ import static Controllers.Manufacturer.listManufacturers;
 @Path("system/")
 public class RetroSystem {
 
+    /*-------------------------------------------------------
+    This method avoids have code duplicated in listSystem
+    and getSystem. It creates a JSON object from the next
+    item in a database results set.
+    ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     private static JSONObject systemFromResultSet(ResultSet results) throws SQLException {
 
@@ -45,7 +50,7 @@ public class RetroSystem {
     }
 
     /*-------------------------------------------------------
-    ...
+    A handy little method to get the name of a system from it's Id.
     ------------------------------------------------------*/
     public static String getSystemNameFromId(int id) throws SQLException {
 

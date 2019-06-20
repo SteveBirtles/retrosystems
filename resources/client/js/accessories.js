@@ -1,5 +1,5 @@
 /*-------------------------------------------------------
-  ...
+  This function runs when accessories.html is loaded.
   ------------------------------------------------------*/
 function pageLoad() {
 

@@ -11,10 +11,18 @@ import org.sqlite.SQLiteConfig;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+/* ------------------------------------------------------------------------------
+ This class is where the program starts executing and what starts the server.
+ Tell IntelliJ to run this file to start everything going!
+ Navigate to http://localhost:8081/client/index.html in Chrome once it's running.
+ ------------------------------------------------------------------------------ */
 public class Main {
 
     public static Connection db = null;
 
+    /*-------------------------------------------------------
+    A standard method to connect to an SQLite database.
+    ------------------------------------------------------*/
     private static void openDatabase(String dbFile)
     {
 
@@ -33,9 +41,12 @@ public class Main {
 
     }
 
+    /*-------------------------------------------------------
+    The main method - this is where it all begins!
+    ------------------------------------------------------*/
     public static void main(String[] args) {
 
-        openDatabase("Systems.db");
+        openDatabase("Systems.db");                  // Open the database (see openDatabase method above).
 
         ResourceConfig config = new ResourceConfig();       // Prepare the server configuration (uses the Jetty library).
         config.packages("Controllers");                     // The package containing the HTTP request handlers for the API.

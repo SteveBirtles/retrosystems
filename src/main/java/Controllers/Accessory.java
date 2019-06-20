@@ -20,6 +20,11 @@ import static Controllers.RetroSystem.getSystemNameFromId;
 @Path("accessory/")
 public class Accessory {
 
+    /*-------------------------------------------------------
+    This method avoids have code duplicated in listAccessory
+    and getAccessory. It creates a JSON object from the next
+    item in a database results set.
+    ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     private static JSONObject accessoryFromResultSet(ResultSet results) throws SQLException {
 

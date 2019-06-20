@@ -1,5 +1,5 @@
 /*-------------------------------------------------------
-  ...
+  This function runs when index.html is loaded.
   ------------------------------------------------------*/
 function pageLoad() {
     updateSystemList();

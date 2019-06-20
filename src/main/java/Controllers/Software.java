@@ -19,6 +19,11 @@ import static Controllers.RetroSystem.getSystemNameFromId;
 @Path("software/")
 public class Software {
 
+    /*-------------------------------------------------------
+    This method avoids have code duplicated in listSoftware
+    and getSoftware. It creates a JSON object from the next
+    item in a database results set.
+    ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
     private static JSONObject softwareFromResultSet(ResultSet results) throws SQLException {
 
