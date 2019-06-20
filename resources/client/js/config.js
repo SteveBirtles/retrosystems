@@ -2,6 +2,12 @@ let id = -1;
 
 /*-------------------------------------------------------
   This function runs when config.html is loaded.
+  Functions from several other JavaScript files are called...
+      - configAdmins.js
+      - configImages.js
+      - configManufacturers.js
+      - configCategories.js
+  ...as well as admin.js to check the login.
   ------------------------------------------------------*/
 function pageLoad() {
 
@@ -10,18 +16,15 @@ function pageLoad() {
 
     checkLogin(() => {
 
-        const imageUploadForm = document.getElementById("imageUploadForm");
-
-        imageUploadForm.addEventListener("submit", uploadImage);
-
+        loadAdmins();
+        loadImages();
         loadManufacturers();
         loadCategories();
-        loadImages();
-        loadAdmins();
 
+        document.getElementById("addAdmin").addEventListener("click", addAdmin);
+        document.getElementById("imageUploadForm").addEventListener("submit", uploadImage);
         document.getElementById("addManufacturer").addEventListener("click", addManufacturer);
         document.getElementById("addCategory").addEventListener("click", addCategory);
-        document.getElementById("addAdmin").addEventListener("click", addAdmin);
 
     });
 
