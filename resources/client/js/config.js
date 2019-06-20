@@ -1,5 +1,3 @@
-let id = -1;
-
 /*-------------------------------------------------------
   This function runs when config.html is loaded.
   Functions from several other JavaScript files are called...
