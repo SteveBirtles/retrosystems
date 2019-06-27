@@ -57,11 +57,13 @@ public class Category {
 
 
     /*-------------------------------------------------------
-    ...
+    The API request handler for /category/list
+        FormDataParams: none
+        Cookies: none
     ------------------------------------------------------*/
     public static JSONArray listCategories() throws SQLException {
 
-        System.out.println("/software/list - Getting all categories from database");
+        System.out.println("/category/list - Getting all categories from database");
 
         PreparedStatement statement = Main.db.prepareStatement(
                 "SELECT CategoryId, Name FROM Categories ORDER BY Name"

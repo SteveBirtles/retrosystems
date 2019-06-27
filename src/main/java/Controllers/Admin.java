@@ -56,7 +56,9 @@ public class Admin {
     }
 
     /*-------------------------------------------------------
-    ...
+    A utility function that queries the database for any users who
+    have a particular sessionToken value as found in the cookie.
+    Returns the username or null if no user found.
     ------------------------------------------------------*/
     public static String validateSessionCookie(Cookie sessionCookie) {
         if (sessionCookie != null) {
@@ -186,7 +188,7 @@ public class Admin {
     public String addAdmin(  @FormDataParam("username") String username,
                              @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/admin/ username=" + username + " - Adding new admin to database");
+        System.out.println("/admin/new username=" + username + " - Adding new admin to database");
 
         try {
 
