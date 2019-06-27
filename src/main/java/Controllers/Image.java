@@ -23,8 +23,8 @@ import java.util.Comparator;
 @Path("image/")
 public class Image {
 
-    @SuppressWarnings("unchecked")
-    public static ArrayList<String> allImages() {
+    /*@SuppressWarnings("unchecked")
+    public static ArrayList<String> allImages_() {
         ArrayList<String> images = new ArrayList<>();
 
         File folder = new File("resources/client/img");
@@ -48,7 +48,7 @@ public class Image {
         }
 
         return images;
-    }
+    }*/
 
     /*-------------------------------------------------------
     The API request handler for /image/list
@@ -58,14 +58,9 @@ public class Image {
     @GET
     @Path("list")
     @Produces(MediaType.APPLICATION_JSON)
-    public String listImages(@CookieParam("sessionToken") Cookie sessionCookie) {
+    public String listImages() {
 
         System.out.println("/image/list - Getting all image files from folder");
-
-        String currentUsername = Admin.validateSessionCookie(sessionCookie);
-        if (currentUsername == null) {
-            return "{\"error\": \"Not logged in as valid admin\"}";
-        }
 
         ArrayList<String> systemImages = new ArrayList<>();
         ArrayList<String> softwareImages = new ArrayList<>();
@@ -101,10 +96,31 @@ public class Image {
 
         }
 
-        ArrayList<String> allImageFilenames = allImages();
+        ArrayList<String> images = new ArrayList<>();
+
+        File folder = new File("resources/client/img");
+
+        File[] sortedFiles = folder.listFiles();
+
+        if (sortedFiles != null) {
+
+            Arrays.sort(sortedFiles, new Comparator<File>() {
+                @Override
+                public int compare(File file1, File file2) {
+                    return file1.getName().compareTo(file2.getName());
+                }
+            });
+
+            for (File file : sortedFiles) {
+                if (file.isFile()) {
+                    images.add(file.getName());
+                }
+            }
+        }
+
         JSONArray responses = new JSONArray();
 
-        for (String imageFilename : allImageFilenames) {
+        for (String imageFilename : images) {
 
             int systemCount = 0;
             for (String systemImage : systemImages) {

@@ -12,9 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static Controllers.Image.allImages;
-import static Controllers.Manufacturer.listManufacturers;
-
 @SuppressWarnings("unchecked")
 @Path("system/")
 public class RetroSystem {
@@ -102,8 +99,6 @@ public class RetroSystem {
                 systemList.add(systemFromResultSet(results));
             }
             response.put("systems", systemList);
-            response.put("manufacturers", listManufacturers());
-            response.put("images", allImages());
 
             return response.toString();
 
@@ -159,9 +154,6 @@ public class RetroSystem {
                 }
 
             }
-
-            response.put("manufacturers", listManufacturers());
-            response.put("images", allImages());
 
             return response.toString();
 

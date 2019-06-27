@@ -12,8 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static Controllers.Category.listCategories;
-import static Controllers.Image.allImages;
 import static Controllers.RetroSystem.getSystemNameFromId;
 
 @SuppressWarnings("unchecked")
@@ -82,7 +80,6 @@ public class Accessory {
             }
 
             response.put("accessories", accessoryList);
-            response.put("categories", listCategories());
 
             return response.toString();
 
@@ -137,9 +134,6 @@ public class Accessory {
 
                 }
             }
-
-            response.put("categories", listCategories());
-            response.put("images", allImages());
 
             return response.toString();
 

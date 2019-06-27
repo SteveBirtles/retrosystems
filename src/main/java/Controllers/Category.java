@@ -24,7 +24,7 @@ public class Category {
     @GET
     @Path("list")
     @Produces(MediaType.APPLICATION_JSON)
-    public String listCategoriesForConfig() {
+    public String listCategories() {
         String error;
         try {
 
@@ -53,34 +53,6 @@ public class Category {
         }
         System.out.println(error);
         return "{'error': '" + error + "'}";
-    }
-
-
-    /*-------------------------------------------------------
-    The API request handler for /category/list
-        FormDataParams: none
-        Cookies: none
-    ------------------------------------------------------*/
-    public static JSONArray listCategories() throws SQLException {
-
-        System.out.println("/category/list - Getting all categories from database");
-
-        PreparedStatement statement = Main.db.prepareStatement(
-                "SELECT CategoryId, Name FROM Categories ORDER BY Name"
-        );
-
-        ResultSet results = statement.executeQuery();
-
-        JSONArray list = new JSONArray();
-        while (results != null && results.next()) {
-            JSONObject category = new JSONObject();
-            category.put("categoryId", results.getInt("CategoryId"));
-            category.put("name", results.getString("Name"));
-            list.add(category);
-        }
-
-        return list;
-
     }
 
     /*-------------------------------------------------------

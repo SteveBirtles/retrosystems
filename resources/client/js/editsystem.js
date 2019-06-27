@@ -36,38 +36,51 @@ function pageLoad() {
 
 /*-------------------------------------------------------
   Does an API request to /system/get/{id}
+  Just before that does API requests to /image/list and /manufacturer/list
   Uses the response to populate the elements in 'systemForm'
   ------------------------------------------------------*/
 function loadSystem() {
 
-    fetch('/system/get/' + id, {method: 'get'}
+    fetch('/image/list', {method: 'get'}
     ).then(response => response.json()
-    ).then(data => {
-
-            if (data.hasOwnProperty('error')) {
-                alert(data.error);
-            } else {
-                for (let m of data.manufacturers) {
-                    document.querySelector("[name='manufacturerId']").innerHTML += `<option value="${m.manufacturerId}">${m.name}</option>`;
-                }
-                for (let i of data.images) {
-                    document.querySelector("[name='imageURL']").innerHTML +=`<option value="${i}">${i}</option>`;
-                }
-
-                if (id != -1) {
-                    document.querySelector("[name='name']").value = data.system.name;
-                    document.querySelector("[name='manufacturerId']").value = data.system.manufacturerId;
-                    document.querySelector("[name='mediaType']").value = data.system.mediaType;
-                    document.querySelector("[name='year']").value = data.system.year;
-                    document.querySelector("[name='sales']").value = data.system.sales;
-                    document.querySelector("[name='handheld']").checked = data.system.handheld;
-                    document.querySelector("[name='imageURL']").value = data.system.imageURL;
-                    document.getElementById("chosenImage").src = "/client/img/" + data.system.imageURL;
-                    document.querySelector("[name='notes']").value = data.system.notes;
-                }
-            }
+    ).then(images => {
+        for (let i of images) {
+            document.querySelector("[name='imageURL']").innerHTML += `<option value="${i.filename}">${i.filename}</option>`;
         }
-    );
+
+        fetch('/manufacturer/list', {method: 'get'}
+        ).then(response => response.json()
+        ).then(manufacturers => {
+
+            for (let m of manufacturers) {
+                document.querySelector("[name='manufacturerId']").innerHTML += `<option value="${m.manufacturerId}">${m.name}</option>`;
+            }
+
+            if (id != -1) {
+
+                fetch('/system/get/' + id, {method: 'get'}
+                ).then(response => response.json()
+                ).then(data => {
+
+                        if (data.hasOwnProperty('error')) {
+                            alert(data.error);
+                        } else {
+                            document.querySelector("[name='name']").value = data.system.name;
+                            document.querySelector("[name='manufacturerId']").value = data.system.manufacturerId;
+                            document.querySelector("[name='mediaType']").value = data.system.mediaType;
+                            document.querySelector("[name='year']").value = data.system.year;
+                            document.querySelector("[name='sales']").value = data.system.sales;
+                            document.querySelector("[name='handheld']").checked = data.system.handheld;
+                            document.querySelector("[name='imageURL']").value = data.system.imageURL;
+                            document.getElementById("chosenImage").src = "/client/img/" + data.system.imageURL;
+                            document.querySelector("[name='notes']").value = data.system.notes;
+                        }
+
+                    }
+                );
+            }
+        });
+    });
 
 }
 

@@ -5,7 +5,7 @@
   ------------------------------------------------------*/
 function loadCategories() {
 
-    fetch( '/category/list', {method: 'get'})
+    fetch('/category/list', {method: 'get'})
         .then(response => response.json())
         .then(data => {
 
@@ -130,7 +130,7 @@ function deleteCategory(event) {
     formData.append("id", id);
 
     if (ok === true) {
-        fetch( '/category/delete', {method: 'post', body: formData}
+        fetch('/category/delete', {method: 'post', body: formData}
         ).then(response => response.json()
         ).then(data => {
 

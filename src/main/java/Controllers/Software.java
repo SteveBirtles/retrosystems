@@ -12,7 +12,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static Controllers.Image.allImages;
 import static Controllers.RetroSystem.getSystemNameFromId;
 
 @SuppressWarnings("unchecked")
@@ -135,8 +134,6 @@ public class Software {
                 }
 
             }
-
-            response.put("images", allImages());
 
             return response.toString();
 

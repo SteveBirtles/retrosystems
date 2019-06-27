@@ -24,7 +24,7 @@ public class Manufacturer {
     @GET
     @Path("list")
     @Produces(MediaType.APPLICATION_JSON)
-    public String listManufacturersForConfig() {
+    public String listManufacturers() {
         String error;
         try {
 
@@ -53,33 +53,6 @@ public class Manufacturer {
         }
         System.out.println(error);
         return "{'error': '" + error + "'}";
-    }
-
-    /*-------------------------------------------------------
-    The API request handler for /manufacturer/list
-        FormDataParams: none
-        Cookies: none
-    ------------------------------------------------------*/
-    public static JSONArray listManufacturers() throws SQLException {
-
-        System.out.println("/manufacturer/list - Getting all manufacturers from database");
-
-        PreparedStatement statement = Main.db.prepareStatement(
-                "SELECT ManufacturerId, Name FROM Manufacturers ORDER BY Name"
-        );
-
-        ResultSet results = statement.executeQuery();
-
-        JSONArray list = new JSONArray();
-        while (results != null && results.next()) {
-            JSONObject manufacturer = new JSONObject();
-            manufacturer.put("manufacturerId", results.getInt("ManufacturerId"));
-            manufacturer.put("name", results.getString("Name"));
-            list.add(manufacturer);
-        }
-
-        return list;
-
     }
 
     /*-------------------------------------------------------

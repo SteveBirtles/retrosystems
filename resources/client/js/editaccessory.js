@@ -44,35 +44,48 @@ function pageLoad() {
 
 /*-------------------------------------------------------
   Does an API request to /accessory/get/{id}
-  Uses the response to populate the elements in 'accessoryForm'
+  Just before that does API requests to /image/list and /category/list
+  Uses the responses to populate the elements in 'accessoryForm'
   ------------------------------------------------------*/
 function loadAccessory() {
 
-    fetch('/accessory/get/' + id, {method: 'get'}
+    fetch('/image/list', {method: 'get'}
     ).then(response => response.json()
-    ).then(data => {
-
-            if (data.hasOwnProperty('error')) {
-                alert(data.error);
-            } else {
-                for (let c of data.categories) {
-                    document.querySelector("[name='categoryId']").innerHTML +=`<option value="${c.categoryId}">${c.name}</option>`;
-                }
-                for (let i of data.images) {
-                    document.querySelector("[name='imageURL']").innerHTML +=`<option value="${i}">${i}</option>`;
-                }
-                if (id != -1) {
-                    document.querySelector("[name='systemId']").value = data.accessory.systemId;
-                    document.querySelector("[name='categoryId']").value = data.accessory.categoryId;
-                    document.querySelector("[name='description']").value = data.accessory.description;
-                    document.querySelector("[name='imageURL']").value = data.accessory.imageURL;
-                    document.getElementById("chosenImage").src = "/client/img/" + data.accessory.imageURL;
-                    document.querySelector("[name='quantity']").value = data.accessory.quantity;
-                    document.querySelector("[name='thirdParty']").checked = data.accessory.thirdParty;
-                }
-            }
+    ).then(images => {
+        for (let i of images) {
+            document.querySelector("[name='imageURL']").innerHTML += `<option value="${i.filename}">${i.filename}</option>`;
         }
-    );
+
+        fetch('/category/list', {method: 'get'}
+        ).then(response => response.json()
+        ).then(categories => {
+
+            for (let c of categories) {
+                document.querySelector("[name='categoryId']").innerHTML += `<option value="${c.categoryId}">${c.name}</option>`;
+            }
+
+            if (id !== -1) {
+
+                fetch('/accessory/get/' + id, {method: 'get'}
+                ).then(response => response.json()
+                ).then(data => {
+
+                        if (data.hasOwnProperty('error')) {
+                            alert(data.error);
+                        } else {
+                            document.querySelector("[name='systemId']").value = data.accessory.systemId;
+                            document.querySelector("[name='categoryId']").value = data.accessory.categoryId;
+                            document.querySelector("[name='description']").value = data.accessory.description;
+                            document.querySelector("[name='imageURL']").value = data.accessory.imageURL;
+                            document.getElementById("chosenImage").src = "/client/img/" + data.accessory.imageURL;
+                            document.querySelector("[name='quantity']").value = data.accessory.quantity;
+                            document.querySelector("[name='thirdParty']").checked = data.accessory.thirdParty;
+                        }
+                    }
+                );
+            }
+        });
+    });
 
 }
 

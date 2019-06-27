@@ -17,58 +17,65 @@ function pageLoad() {
 
 /*-------------------------------------------------------
   Does an API request to /accessory/list/{id}
-  Uses the response to populate the 'accessories' div element
+  Just before that, does an API request to /category/list
+  Uses the responses to populate the 'accessories' div element
   Also sets the 'system' span element
   ------------------------------------------------------*/
 function updateAccessoriesList(id) {
 
-    fetch('/accessory/list/' + id, {method: 'get'}
+    fetch('/category/list', {method: 'get'}
     ).then(response => response.json()
-    ).then(data => {
+    ).then(categories => {
 
-        if (data.hasOwnProperty('error')) {
+        fetch('/accessory/list/' + id, {method: 'get'}
+        ).then(response => response.json()
+        ).then(data => {
 
-            alert(data.error);
+            if (data.hasOwnProperty('error')) {
 
-        } else if (data.hasOwnProperty('accessories') && data.accessories.length > 0) {
+                alert(data.error);
 
-            let accessoriesHTML = `<div class="container">`;
+            } else if (data.hasOwnProperty('accessories') && data.accessories.length > 0) {
 
-            for (let accessory of data.accessories) {
+                let accessoriesHTML = `<div class="container">`;
 
-                let category = "";
-                for (let c of data.categories) {
-                    if (c.categoryId === accessory.categoryId) {
-                        category = c.name;
+                for (let accessory of data.accessories) {
+
+                    let category = "";
+                    for (let c of categories) {
+                        if (c.categoryId === accessory.categoryId) {
+                            category = c.name;
+                        }
                     }
+
+                    accessoriesHTML += `<div class="row mb-2 border-bottom">`
+
+                        + `<div class="col-xs p-2 align-bottom">`
+                        + `<a href="/client/img/${accessory.imageURL}" target=”_blank”><img height="90px" src="/client/img/${accessory.imageURL}"></a>`
+                        + `</div>`
+
+                        + `<div class="col p-2 align-bottom">`
+                        + `<div class="font-weight-bold">${accessory.description}</div>`
+                        + `<div>${category} ${accessory.thirdParty ? "(Third Party)" : ""}</div>`
+                        + `<div class="font-italic text-muted">Quantity: ${accessory.quantity}</div>`
+                        + `</div>`
+
+                        + `<div class="col-xl text-right py-2">`
+                        + `<a class="btn btn-sm btn-success"  href="/client/editaccessory.html?id=${accessory.id}">Edit</a>`
+                        + `</div>`
+
+                        + `</div>`;
+
                 }
+                accessoriesHTML += `</div>`;
 
-                accessoriesHTML += `<div class="row mb-2 border-bottom">`
-
-                    + `<div class="col-xs p-2 align-bottom">`
-                    + `<a href="/client/img/${accessory.imageURL}" target=”_blank”><img height="90px" src="/client/img/${accessory.imageURL}"></a>`
-                    + `</div>`
-
-                    + `<div class="col p-2 align-bottom">`
-                    + `<div class="font-weight-bold">${accessory.description}</div>`
-                    + `<div>${category} ${accessory.thirdParty ? "(Third Party)" : ""}</div>`
-                    + `<div class="font-italic text-muted">Quantity: ${accessory.quantity}</div>`
-                    + `</div>`
-
-                    + `<div class="col-xl text-right py-2">`
-                    + `<a class="btn btn-sm btn-success"  href="/client/editaccessory.html?id=${accessory.id}">Edit</a>`
-                    + `</div>`
-
-                    + `</div>`;
+                document.getElementById('accessories').innerHTML = accessoriesHTML;
 
             }
-            accessoriesHTML += `</div>`;
 
-            document.getElementById('accessories').innerHTML = accessoriesHTML;
+            document.getElementById('system').innerHTML = data.systemName;
 
-        }
-
-        document.getElementById('system').innerHTML = data.systemName;
+        });
 
     });
 

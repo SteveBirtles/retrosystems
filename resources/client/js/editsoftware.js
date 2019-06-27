@@ -44,30 +44,40 @@ function pageLoad() {
 
 /*-------------------------------------------------------
   Does an API request to /software/get/{id}
+  Just before that does API requests to /image/list
   Uses the response to populate the elements in 'softwareForm'
   ------------------------------------------------------*/
 function loadSoftware() {
 
-    fetch('/software/get/' + id, {method: 'get'}
+    fetch('/image/list', {method: 'get'}
     ).then(response => response.json()
-    ).then(data => {
-
-            if (data.hasOwnProperty('error')) {
-                alert(data.error);
-            } else {
-                for (let i of data.images) {
-                    document.querySelector("[name='imageURL']").innerHTML += `<option value="${i}">${i}</option>`;
-                }
-                document.querySelector("[name='systemId']").value = data.software.systemId;
-                document.querySelector("[name='name']").value = data.software.name;
-                document.querySelector("[name='year']").value = data.software.year;
-                document.querySelector("[name='sales']").value = data.software.sales;
-                document.querySelector("[name='imageURL']").value = data.software.imageURL;
-                document.getElementById("chosenImage").src = "/client/img/" + data.software.imageURL;
-
-            }
+    ).then(images => {
+        for (let i of images) {
+            document.querySelector("[name='imageURL']").innerHTML += `<option value="${i.filename}">${i.filename}</option>`;
         }
-    );
+
+        if (id !== -1) {
+
+            fetch('/software/get/' + id, {method: 'get'}
+            ).then(response => response.json()
+            ).then(data => {
+
+                    if (data.hasOwnProperty('error')) {
+                        alert(data.error);
+                    } else {
+
+                        document.querySelector("[name='systemId']").value = data.software.systemId;
+                        document.querySelector("[name='name']").value = data.software.name;
+                        document.querySelector("[name='year']").value = data.software.year;
+                        document.querySelector("[name='sales']").value = data.software.sales;
+                        document.querySelector("[name='imageURL']").value = data.software.imageURL;
+                        document.getElementById("chosenImage").src = "/client/img/" + data.software.imageURL;
+
+                    }
+                }
+            );
+        }
+    });
 
 }
 

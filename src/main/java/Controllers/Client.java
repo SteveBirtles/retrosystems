@@ -31,6 +31,13 @@ public class Client {
     }
 
     @GET
+    @Path("lib/{path}")
+    @Produces({"text/javascript"})
+    public byte[] getJavaScriptLibraryFile(@PathParam("path") String path) {
+        return getFile("client/lib/" + path);
+    }
+
+    @GET
     @Path("css/{path}")
     @Produces({"text/css"})
     public byte[] getCSSFile(@PathParam("path") String path) {
