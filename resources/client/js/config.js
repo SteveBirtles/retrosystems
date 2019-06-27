@@ -1,11 +1,13 @@
 /*-------------------------------------------------------
   This function runs when config.html is loaded.
-  Functions from several other JavaScript files are called...
+  The current page URL is stored in the 'destination' cookie.
+  Then, checkLogin is called from admin.js...
+  If successful, functions from several other JavaScript files are called...
       - configAdmins.js
       - configImages.js
       - configManufacturers.js
       - configCategories.js
-  ...as well as admin.js to check the login.
+  ...and event listeners are added to the various add item buttons and the imageUploadForm submit event.
   ------------------------------------------------------*/
 function pageLoad() {
 

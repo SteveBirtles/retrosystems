@@ -16,7 +16,9 @@ function pageLoad() {
 }
 
 /*-------------------------------------------------------
-  ...
+  Does an API request to /accessory/list/{id}
+  Uses the response to populate the 'accessories' div element
+  Also sets the 'system' span element
   ------------------------------------------------------*/
 function updateAccessoriesList(id) {
 

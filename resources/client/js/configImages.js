@@ -1,9 +1,11 @@
 /*-------------------------------------------------------
-  ...
+  Does an API request to /image/list
+  Uses the response to populate the 'images' div element
+  Also adds click event handlers for buttons of class 'renameImageFile' and 'deleteImageFile'
   ------------------------------------------------------*/
 function loadImages() {
 
-    fetch(  '/image/list',{method: 'get'})
+    fetch('/image/list',{method: 'get'})
         .then(response => response.json())
         .then(data => {
 
@@ -37,14 +39,14 @@ function loadImages() {
 
                     document.getElementById('images').innerHTML = imagesHTML;
 
-                    let renameImageButtons = document.getElementsByClassName("renameImageFile");
+                    let renameImageButtons = document.getElementsByClassName('renameImageFile');
                     for (let e of renameImageButtons) {
-                        e.addEventListener("click", renameImageFile);
+                        e.addEventListener('click', renameImageFile);
                     }
 
-                    let deleteImageButtons = document.getElementsByClassName("deleteImageFile");
+                    let deleteImageButtons = document.getElementsByClassName('deleteImageFile');
                     for (let e of deleteImageButtons) {
-                        e.addEventListener("click", deleteImageFile);
+                        e.addEventListener('click', deleteImageFile);
                     }
 
                 }
@@ -53,16 +55,21 @@ function loadImages() {
 
 }
 
+/*-------------------------------------------------------
+  Does an API request to /image/upload using the data in 'imageUploadForm'
+  Whilst uploading, the 'uploading' div is made visible
+  If successful, reloads the list of images, resets the file upload element and hides the 'uploading' div
+  ------------------------------------------------------*/
 function uploadImage(event) {
 
     event.preventDefault();
 
-    const imageUploadForm = document.getElementById("imageUploadForm");
+    const imageUploadForm = document.getElementById('imageUploadForm');
 
-    if (document.getElementById("file").value !== '') {
+    if (document.getElementById('file').value !== '') {
 
         imageUploadForm.style.display = 'none';
-        document.getElementById("uploading").style.display = 'block';
+        document.getElementById('uploading').style.display = 'block';
 
         let fileData = new FormData(imageUploadForm);
 
@@ -73,31 +80,33 @@ function uploadImage(event) {
                 if (data.hasOwnProperty('error')) {
                     alert(data.error);
                 } else {
-                    document.getElementById("file").value = '';
+                    document.getElementById('file').value = '';
                     loadImages();
                 }
                 imageUploadForm.style.visibility = 'visible';
 
-                document.getElementById("uploading").style.display = 'none';
+                document.getElementById('uploading').style.display = 'none';
             }
         );
     } else {
-        alert("No file specified");
+        alert('No file specified');
     }
 
 }
 
 /*-------------------------------------------------------
-  ...
+  Does an API request to /image/rename
+  Prompts for the new filename before sending the request.
+  If successful, reloads the image list.
   ------------------------------------------------------*/
 function renameImageFile(event) {
 
-    let oldFilename = event.target.getAttribute("data-filename");
-    let newFilename = prompt("Please enter new file name", oldFilename);
+    let oldFilename = event.target.getAttribute('data-filename');
+    let newFilename = prompt('Please enter new file name', oldFilename);
 
     let formData = new FormData();
-    formData.append("oldFilename", oldFilename);
-    formData.append("newFilename", newFilename);
+    formData.append('oldFilename', oldFilename);
+    formData.append('newFilename', newFilename);
 
     if (newFilename != null) {
         fetch('/image/rename', {method: 'post',  body: formData}
@@ -116,17 +125,19 @@ function renameImageFile(event) {
 }
 
 /*-------------------------------------------------------
-  ...
+  Does an API request to /image/delete
+  Prompts for confirmation before sending the request.
+  If successful, reloads the images list.
   ------------------------------------------------------*/
 function deleteImageFile(event) {
 
-    let filename = event.target.getAttribute("data-filename");
-    let ok = confirm("Are you sure you want to delete " + filename + "?");
+    let filename = event.target.getAttribute('data-filename');
+    let ok = confirm('Are you sure you want to delete ' + filename + '?');
 
     if (ok === true) {
 
         let formData = new FormData();
-        formData.append("filename", filename);
+        formData.append('filename', filename);
 
         fetch('/image/delete', {method: 'post'})
             .then(response => response.json())

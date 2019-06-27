@@ -1,5 +1,6 @@
 /*-------------------------------------------------------
-  ...
+  A utility function to extract the query string parameters
+  and return them as a map of key-value pairs
   ------------------------------------------------------*/
 function getQueryStringParameters() {
     let params = [];
@@ -8,7 +9,6 @@ function getQueryStringParameters() {
         q = q.split('&');
         for (let i = 0; i < q.length; i++) {
             let bits = q[i].split('=');
-            params.push(bits[1]);
             params[bits[0]] = bits[1];
         }
     }

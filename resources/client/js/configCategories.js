@@ -1,5 +1,7 @@
 /*-------------------------------------------------------
-  ...
+  Does an API request to /category/list
+  Uses the response to populate the 'categories' div element
+  Also adds click event handlers for buttons of class 'renameCategory' and 'deleteCategory'
   ------------------------------------------------------*/
 function loadCategories() {
 
@@ -50,7 +52,9 @@ function loadCategories() {
 }
 
 /*-------------------------------------------------------
-  ...
+  Does an API request to /category/new
+  Prompts for the new category name before sending the request.
+  If successful, reloads the categories list.
   ------------------------------------------------------*/
 function addCategory() {
 
@@ -75,7 +79,9 @@ function addCategory() {
 }
 
 /*-------------------------------------------------------
-  ...
+  Does an API request to /manufacturer/rename
+  Prompts for the new manufacturer name before sending the request.
+  If successful, reloads the manufacturers list.
   ------------------------------------------------------*/
 function renameCategory(event) {
 
@@ -103,7 +109,10 @@ function renameCategory(event) {
 }
 
 /*-------------------------------------------------------
-  ...
+  Does an API request to /category/delete
+  Checks if the category is in use before sending the request.
+  Also prompts for confirmation.
+  If successful, reloads the categories list.
   ------------------------------------------------------*/
 function deleteCategory(event) {
 

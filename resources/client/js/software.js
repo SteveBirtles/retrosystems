@@ -16,7 +16,9 @@ function pageLoad() {
 }
 
 /*-------------------------------------------------------
-  ...
+  Does an API request to /software/list/{id}
+  Uses the response to populate the 'software' div element
+  Also sets the 'system' span element
   ------------------------------------------------------*/
 function updateSoftwareList(id) {
 

@@ -6,7 +6,10 @@ function pageLoad() {
 }
 
 /*-------------------------------------------------------
-  ...
+  Does an API request to /system/list
+  Uses the response to populate the 'systems' div element
+  (sorted as specified by the 'systemSort' select element)
+  Also adds an event listener for the 'systemSort' select element
   ------------------------------------------------------*/
 function updateSystemList() {
 

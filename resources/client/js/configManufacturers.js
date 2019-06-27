@@ -1,5 +1,7 @@
 /*-------------------------------------------------------
-  ...
+  Does an API request to /manufacturer/list
+  Uses the response to populate the 'manufacturers' div element
+  Also adds click event handlers for buttons of class 'renameManufacturer' and 'deleteManufacturer'
   ------------------------------------------------------*/
 function loadManufacturers() {
 
@@ -50,7 +52,9 @@ function loadManufacturers() {
 }
 
 /*-------------------------------------------------------
-  ...
+  Does an API request to /manufacturer/new
+  Prompts for the new manufacturer name before sending the request.
+  If successful, reloads the manufacturers list.
   ------------------------------------------------------*/
 function addManufacturer() {
 
@@ -59,21 +63,25 @@ function addManufacturer() {
     let formData = new FormData();
     formData.append("name", manufacturer);
 
-    fetch('/manufacturer/new', {method: 'post', body: formData}
-    ).then(response => response.json()
-    ).then(data => {
-            if (data.hasOwnProperty('error')) {
-                alert(data.error);
-            } else {
-                loadManufacturers();
+    if (manufacturer != null) {
+        fetch('/manufacturer/new', {method: 'post', body: formData}
+        ).then(response => response.json()
+        ).then(data => {
+                if (data.hasOwnProperty('error')) {
+                    alert(data.error);
+                } else {
+                    loadManufacturers();
+                }
             }
-        }
-    );
+        );
+    }
 
 }
 
 /*-------------------------------------------------------
-  ...
+  Does an API request to /manufacturer/rename
+  Prompts for the new manufacturer name before sending the request.
+  If successful, reloads the manufacturers list.
   ------------------------------------------------------*/
 function renameManufacturer(event) {
 
@@ -102,7 +110,10 @@ function renameManufacturer(event) {
 }
 
 /*-------------------------------------------------------
-  ...
+  Does an API request to /manufacturer/delete
+  Checks if the manufacturer is in use before sending the request.
+  Also prompts for confirmation.
+  If successful, reloads the manufacturers list.
   ------------------------------------------------------*/
 function deleteManufacturer(event) {
 

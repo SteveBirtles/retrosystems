@@ -1,5 +1,7 @@
 /*-------------------------------------------------------
-  ...
+  Does an API request to /admin/list
+  Uses the response to populate the 'administrators' div element
+  Also adds click event handlers for buttons of class 'renameAdmin', 'resetPassword' and 'deleteAdmin'
   ------------------------------------------------------*/
 function loadAdmins() {
 
@@ -54,7 +56,9 @@ function loadAdmins() {
 }
 
 /*-------------------------------------------------------
-  ...
+  Does an API request to /admin/new
+  Prompts for the new admin name before sending the request.
+  If successful, reloads the admins list.
   ------------------------------------------------------*/
 function addAdmin() {
 
@@ -81,7 +85,8 @@ function addAdmin() {
 }
 
 /*-------------------------------------------------------
-  ...
+  Does an API request to /admin/reset
+  Prompts for the new password before sending the request.
   ------------------------------------------------------*/
 function resetPassword(event) {
 
@@ -108,7 +113,9 @@ function resetPassword(event) {
 }
 
 /*-------------------------------------------------------
-  ...
+  Does an API request to /admin/rename
+  Prompts for the new admin name before sending the request.
+  If successful, reloads the admins list.
   ------------------------------------------------------*/
 function renameAdmin(event) {
 
@@ -137,7 +144,9 @@ function renameAdmin(event) {
 }
 
 /*-------------------------------------------------------
-  ...
+  Does an API request to /admin/delete
+  Prompts for confirmation before sending the request.
+  If successful, reloads the admins list.
   ------------------------------------------------------*/
 function deleteAdmin(event) {
 
