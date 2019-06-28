@@ -10,7 +10,6 @@ import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import static Controllers.RetroSystem.getSystemNameFromId;
 
@@ -24,7 +23,7 @@ public class Accessory {
     item in a database results set.
     ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
-    private static JSONObject accessoryFromResultSet(ResultSet results) throws SQLException {
+    private static JSONObject accessoryFromResultSet(ResultSet results) throws Exception {
 
         JSONObject accessory = new JSONObject();
 
@@ -83,7 +82,7 @@ public class Accessory {
 
             return response.toString();
 
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
 
             error = "Database error - can't select all from 'Accessories' table: " + resultsException.getMessage();
 
@@ -130,14 +129,14 @@ public class Accessory {
                 if (accessory != null) {
                     response.put("accessory", accessory);
                 } else {
-                    throw new SQLException("Can't find accessory with id " + id);
+                    throw new Exception("Can't find accessory with id " + id);
 
                 }
             }
 
             return response.toString();
 
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
 
             error = "Database error - can't select by id from 'Accessories' table: " + resultsException.getMessage();
 
@@ -157,18 +156,28 @@ public class Accessory {
     @Path("save")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public String saveAccessory(  @FormDataParam("id") int id,
-                                  @FormDataParam("categoryId") int categoryId,
-                                  @FormDataParam("systemId") int systemId,
+    public String saveAccessory(  @FormDataParam("id") Integer id,
+                                  @FormDataParam("categoryId") Integer categoryId,
+                                  @FormDataParam("systemId") Integer systemId,
                                   @FormDataParam("description") String description,
-                                  @FormDataParam("quantity") int quantity,
+                                  @FormDataParam("quantity") Integer quantity,
                                   @DefaultValue("false") @FormDataParam("thirdParty") String thirdParty,
                                   @FormDataParam("imageURL") String imageURL,
                                   @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/accessory/save id=" + id + " - Saving accessory to database");
-
         try {
+
+            if (id == null ||
+                    categoryId == null ||
+                    systemId  == null ||
+                    description  == null ||
+                    quantity  == null ||
+                    thirdParty  == null ||
+                    imageURL == null) {
+                throw new Exception("One or more form data parameters are missing in the HTTP request.");
+            }
+
+            System.out.println("/accessory/save id=" + id + " - Saving accessory to database");
 
             String currentUsername = Admin.validateSessionCookie(sessionCookie);
             if (currentUsername == null) {
@@ -201,7 +210,7 @@ public class Accessory {
 
             return "{\"status\": \"OK\"}";
 
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
             String error = "Database error - can't insert/update 'Accessories' table: " + resultsException.getMessage();
             System.out.println(error);
             return "{\"error\": \"" + error + "\"}";
@@ -217,12 +226,16 @@ public class Accessory {
     @POST
     @Path("delete")
     @Produces(MediaType.APPLICATION_JSON)
-    public String deleteSoftware(@FormDataParam("id") int id,
+    public String deleteSoftware(@FormDataParam("id") Integer id,
                                  @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/accessory/delete id=" + id + " - Deleting Software from database");
-
         try {
+
+            if (id == null) {
+                throw new Exception("One or more form data parameters are missing in the HTTP request.");
+            }
+
+            System.out.println("/accessory/delete id=" + id + " - Deleting Software from database");
 
             String currentUsername = Admin.validateSessionCookie(sessionCookie);
             if (currentUsername == null) {
@@ -236,7 +249,7 @@ public class Accessory {
             statement.executeUpdate();
             return "{\"status\": \"OK\"}";
 
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
 
             String error = "Database error - can't delete by id from 'Accessory' table: " + resultsException.getMessage();
             System.out.println(error);

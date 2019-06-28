@@ -10,7 +10,6 @@ import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 @SuppressWarnings("unchecked")
 @Path("system/")
@@ -22,7 +21,7 @@ public class RetroSystem {
     item in a database results set.
     ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
-    private static JSONObject systemFromResultSet(ResultSet results) throws SQLException {
+    private static JSONObject systemFromResultSet(ResultSet results) throws Exception {
 
         JSONObject system = new JSONObject();
 
@@ -49,7 +48,7 @@ public class RetroSystem {
     /*-------------------------------------------------------
     A handy little method to get the name of a system from it's Id.
     ------------------------------------------------------*/
-    public static String getSystemNameFromId(int id) throws SQLException {
+    public static String getSystemNameFromId(int id) throws Exception {
 
         PreparedStatement systemStatement = Main.db.prepareStatement(
                 "SELECT Name FROM Systems WHERE SystemId = ?"
@@ -64,7 +63,7 @@ public class RetroSystem {
         }
 
         if (systemName == null) {
-            throw new SQLException("Can't find system with id " + id);
+            throw new Exception("Can't find system with id " + id);
         }
 
         return systemName;
@@ -102,7 +101,7 @@ public class RetroSystem {
 
             return response.toString();
 
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
 
             error = "Database error - can't select all from 'Systems' table: " + resultsException.getMessage();
 
@@ -150,14 +149,14 @@ public class RetroSystem {
                 if (system != null) {
                     response.put("system", system);
                 } else {
-                    throw new SQLException("Can't find system with id " + id);
+                    throw new Exception("Can't find system with id " + id);
                 }
 
             }
 
             return response.toString();
 
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
 
             error = "Database error - can't select by id from 'Systems' table: " + resultsException.getMessage();
 
@@ -178,8 +177,8 @@ public class RetroSystem {
     @Path("save")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public String saveSystem(@FormDataParam("id") int id,
-                             @FormDataParam("manufacturerId") int manufacturerId,
+    public String saveSystem(@FormDataParam("id") Integer id,
+                             @FormDataParam("manufacturerId") Integer manufacturerId,
                              @FormDataParam("name") String name,
                              @FormDataParam("mediaType") String mediaType,
                              @FormDataParam("year") String year,
@@ -190,6 +189,18 @@ public class RetroSystem {
                              @CookieParam("sessionToken") Cookie sessionCookie) {
 
         try {
+
+            if (id == null ||
+                    manufacturerId == null ||
+                    name == null ||
+                    mediaType == null ||
+                    year == null ||
+                    sales == null ||
+                    handheld == null ||
+                    imageURL == null ||
+                    notes == null) {
+                throw new Exception("One or more form data parameters are missing in the HTTP request.");
+            }
 
             System.out.println("/system/save id=" + id + " - Saving system to database.");
 
@@ -226,7 +237,7 @@ public class RetroSystem {
 
             return "{\"status\": \"OK\"}";
 
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
             String error = "Database error - can't insert/update 'Systems' table: " + resultsException.getMessage();
             System.out.println(error);
             return "{\"error\": \"" + error + "\"}";
@@ -241,11 +252,16 @@ public class RetroSystem {
     @POST
     @Path("delete")
     @Produces(MediaType.APPLICATION_JSON)
-    public String deleteSystem(@FormDataParam("id") int id, @CookieParam("sessionToken") Cookie sessionCookie) {
-
-        System.out.println("/system/delete id=" + id + " - Deleting system from database.");
+    public String deleteSystem(@FormDataParam("id") Integer id,
+                               @CookieParam("sessionToken") Cookie sessionCookie) {
 
         try {
+
+            if (id == null) {
+                throw new Exception("One or more form data parameters are missing in the HTTP request.");
+            }
+
+            System.out.println("/system/delete id=" + id + " - Deleting system from database.");
 
             String currentUsername = Admin.validateSessionCookie(sessionCookie);
             if (currentUsername == null) {
@@ -259,7 +275,7 @@ public class RetroSystem {
             statement.executeUpdate();
             return "{\"status\": \"OK\"}";
 
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
 
             String error = "Database error - can't delete by id from 'Systems' table: " + resultsException.getMessage();
             System.out.println(error);

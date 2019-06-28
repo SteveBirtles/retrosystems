@@ -10,7 +10,6 @@ import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import static Controllers.RetroSystem.getSystemNameFromId;
 
@@ -24,7 +23,7 @@ public class Software {
     item in a database results set.
     ------------------------------------------------------*/
     @SuppressWarnings("Duplicates")
-    private static JSONObject softwareFromResultSet(ResultSet results) throws SQLException {
+    private static JSONObject softwareFromResultSet(ResultSet results) throws Exception {
 
         JSONObject software = new JSONObject();
 
@@ -83,7 +82,7 @@ public class Software {
 
             return response.toString();
 
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
 
             error = "Database error - can't select all from 'Software' table: " + resultsException.getMessage();
 
@@ -130,14 +129,14 @@ public class Software {
                 if (software != null) {
                     response.put("software", software);
                 } else {
-                    throw new SQLException("Can't find software with id " + id);
+                    throw new Exception("Can't find software with id " + id);
                 }
 
             }
 
             return response.toString();
 
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
 
             error = "Database error - can't select by id from 'Software' table: " + resultsException.getMessage();
 
@@ -157,17 +156,26 @@ public class Software {
     @Path("save")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public String saveSoftware( @FormDataParam("id") int id,
-                                @FormDataParam("systemId") int systemId,
+    public String saveSoftware( @FormDataParam("id") Integer id,
+                                @FormDataParam("systemId") Integer systemId,
                                 @FormDataParam("name") String name,
                                 @FormDataParam("sales") String sales,
                                 @FormDataParam("year") String year,
                                 @FormDataParam("imageURL") String imageURL,
                                 @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/software/save id=" + id + " - Saving software to database");
-
         try {
+
+            if (id == null ||
+                    systemId == null ||
+                    name == null ||
+                    sales == null ||
+                    year == null ||
+                    imageURL == null) {
+                throw new Exception("One or more form data parameters are missing in the HTTP request.");
+            }
+
+            System.out.println("/software/save id=" + id + " - Saving software to database");
 
             String currentUsername = Admin.validateSessionCookie(sessionCookie);
             if (currentUsername == null) {
@@ -199,7 +207,7 @@ public class Software {
 
             return "{\"status\": \"OK\"}";
 
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
             String error = "Database error - can't insert/update 'Software' table: " + resultsException.getMessage();
             System.out.println(error);
             return "{\"error\": \"" + error + "\"}";
@@ -234,7 +242,7 @@ public class Software {
             statement.executeUpdate();
             return "{\"status\": \"OK\"}";
 
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
 
             String error = "Database error - can't delete by id from 'Software' table: " + resultsException.getMessage();
             System.out.println(error);

@@ -15,7 +15,6 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -60,7 +59,7 @@ public class Image {
             }
 
 
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
 
             String error = "Database error - can't select all from 'Software' table: " + resultsException.getMessage();
 
@@ -189,9 +188,14 @@ public class Image {
                                   @FormDataParam("newFilename") String newFilename,
                                   @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/image/rename oldFilename=" + oldFilename + " newFilename=" + newFilename + " - Renaming image");
-
         try {
+
+            if (oldFilename == null ||
+                    newFilename == null) {
+                throw new Exception("One or more form data parameters are missing in the HTTP request.");
+            }
+
+            System.out.println("/image/rename oldFilename=" + oldFilename + " newFilename=" + newFilename + " - Renaming image");
 
             String currentUsername = Admin.validateSessionCookie(sessionCookie);
             if (currentUsername == null) {
@@ -210,8 +214,8 @@ public class Image {
 
             return "{\"status\": \"OK\"}";
 
-        } catch (IOException ioe) {
-            String error = "File system error: " + ioe.getMessage();
+        } catch (Exception exception) {
+            String error = "File rename error: " + exception.getMessage();
             System.out.println(error);
             return "{\"error\": \"" + error + "\"}";
         }
@@ -231,9 +235,13 @@ public class Image {
     public String deleteImageFile(  @FormDataParam("filename") String filename,
                                     @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/image/delete filename=" + filename + " - Deleting image");
-
         try {
+
+            if (filename == null) {
+                throw new Exception("One or more form data parameters are missing in the HTTP request.");
+            }
+
+            System.out.println("/image/delete filename=" + filename + " - Deleting image");
 
             String currentUsername = Admin.validateSessionCookie(sessionCookie);
             if (currentUsername == null) {
@@ -248,8 +256,8 @@ public class Image {
 
             return "{\"status\": \"OK\"}";
 
-        } catch (IOException ioe) {
-            String error = "File system error: " + ioe.getMessage();
+        } catch (Exception exception) {
+            String error = "File delete error: " + exception.getMessage();
             System.out.println(error);
             return "{\"error\": \"" + error + "\"}";
         }

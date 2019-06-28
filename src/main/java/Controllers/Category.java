@@ -10,7 +10,6 @@ import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 @SuppressWarnings("unchecked")
 @Path("category/")
@@ -48,7 +47,7 @@ public class Category {
             }
 
             return list.toString();
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
             error = "Database error - can't select all from 'Categories' table: " + resultsException.getMessage();
         }
         System.out.println(error);
@@ -68,9 +67,13 @@ public class Category {
     public String addCategory(  @FormDataParam("name") String name,
                                 @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/category/new name=" + name + " - Adding category to database");
-
         try {
+
+            if (name == null) {
+                throw new Exception("One or more form data parameters are missing in the HTTP request.");
+            }
+
+            System.out.println("/category/new name=" + name + " - Adding category to database");
 
             String currentUsername = Admin.validateSessionCookie(sessionCookie);
             if (currentUsername == null) {
@@ -84,7 +87,7 @@ public class Category {
 
             return "{\"status\": \"OK\"}";
 
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
             String error = "Database error - can't insert into 'Categories' table: " + resultsException.getMessage();
             System.out.println(error);
             return "{\"error\": \"" + error + "\"}";
@@ -105,9 +108,14 @@ public class Category {
     public String renameCategory(  @FormDataParam("id") String id, @FormDataParam("name") String name,
                                    @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/category/rename id=" + id + " name=" + name + " - Renaming category in database");
-
         try {
+
+            if (id == null ||
+                    name == null) {
+                throw new Exception("One or more form data parameters are missing in the HTTP request.");
+            }
+
+            System.out.println("/category/rename id=" + id + " name=" + name + " - Renaming category in database");
 
             String currentUsername = Admin.validateSessionCookie(sessionCookie);
             if (currentUsername == null) {
@@ -122,7 +130,7 @@ public class Category {
 
             return "{\"status\": \"OK\"}";
 
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
             String error = "Database error - can't update 'Categories' table: " + resultsException.getMessage();
             System.out.println(error);
             return "{\"error\": \"" + error + "\"}";
@@ -143,9 +151,13 @@ public class Category {
     public String deleteCategory(@FormDataParam("id") String id,
                                    @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/category/delete id=" + id + " - Deleting category from database");
-
         try {
+
+            if (id == null) {
+                throw new Exception("One or more form data parameters are missing in the HTTP request.");
+            }
+
+            System.out.println("/category/delete id=" + id + " - Deleting category from database");
 
             String currentUsername = Admin.validateSessionCookie(sessionCookie);
             if (currentUsername == null) {
@@ -159,7 +171,7 @@ public class Category {
 
             return "{\"status\": \"OK\"}";
 
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
             String error = "Database error - can't delete from 'Categories' table: " + resultsException.getMessage();
             System.out.println(error);
             return "{\"error\": \"" + error + "\"}";

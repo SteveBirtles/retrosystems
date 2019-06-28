@@ -10,7 +10,6 @@ import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 
 @SuppressWarnings("unchecked")
 @Path("manufacturer/")
@@ -48,7 +47,7 @@ public class Manufacturer {
             }
 
             return list.toString();
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
             error = "Database error - can't select all from 'Manufacturers' table: " + resultsException.getMessage();
         }
         System.out.println(error);
@@ -68,9 +67,13 @@ public class Manufacturer {
     public String addManufacturer(  @FormDataParam("name") String name,
                                     @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/manufacturer/new name=" + name + " - Adding manufacturer to database");
-
         try {
+
+            if (name == null ) {
+                throw new Exception("One or more form data parameters are missing in the HTTP request.");
+            }
+
+            System.out.println("/manufacturer/new name=" + name + " - Adding manufacturer to database");
 
             String currentUsername = Admin.validateSessionCookie(sessionCookie);
             if (currentUsername == null) {
@@ -84,7 +87,7 @@ public class Manufacturer {
 
             return "{\"status\": \"OK\"}";
 
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
             String error = "Database error - can't insert into 'Manufacturers' table: " + resultsException.getMessage();
             System.out.println(error);
             return "{\"error\": \"" + error + "\"}";
@@ -102,12 +105,18 @@ public class Manufacturer {
     @Path("rename")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
-    public String renameManufacturer(  @FormDataParam("id") String id, @FormDataParam("name") String name,
+    public String renameManufacturer(  @FormDataParam("id") String id,
+                                       @FormDataParam("name") String name,
                                        @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/manufacturer/rename id=" + id + " name=" + name + " - Renaming manufacturer in database");
-
         try {
+
+            if (id == null ||
+                    name == null) {
+                throw new Exception("One or more form data parameters are missing in the HTTP request.");
+            }
+
+            System.out.println("/manufacturer/rename id=" + id + " name=" + name + " - Renaming manufacturer in database");
 
             String currentUsername = Admin.validateSessionCookie(sessionCookie);
             if (currentUsername == null) {
@@ -122,7 +131,7 @@ public class Manufacturer {
 
             return "{\"status\": \"OK\"}";
 
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
             String error = "Database error - can't update 'Manufacturers' table: " + resultsException.getMessage();
             System.out.println(error);
             return "{\"error\": \"" + error + "\"}";
@@ -143,9 +152,13 @@ public class Manufacturer {
     public String deleteManufacturer(  @FormDataParam("id") String id,
                                        @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/manufacturer/delete id=" + id + " - Deleting manufacturer from database");
-
         try {
+
+            if (id == null) {
+                throw new Exception("One or more form data parameters are missing in the HTTP request.");
+            }
+
+            System.out.println("/manufacturer/delete id=" + id + " - Deleting manufacturer from database");
 
             String currentUsername = Admin.validateSessionCookie(sessionCookie);
             if (currentUsername == null) {
@@ -159,7 +172,7 @@ public class Manufacturer {
 
             return "{\"status\": \"OK\"}";
 
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
             String error = "Database error - can't delete from 'Manufacturers' table: " + resultsException.getMessage();
             System.out.println(error);
             return "{\"error\": \"" + error + "\"}";

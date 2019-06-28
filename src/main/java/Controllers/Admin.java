@@ -10,7 +10,6 @@ import javax.ws.rs.core.Cookie;
 import javax.ws.rs.core.MediaType;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.UUID;
 
 @SuppressWarnings("unchecked")
@@ -48,7 +47,7 @@ public class Admin {
             }
 
             return list.toString();
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
             error = "Database error - can't select all from 'Admins' table: " + resultsException.getMessage();
         }
         System.out.println(error);
@@ -72,7 +71,7 @@ public class Admin {
                 if (results != null && results.next()) {
                     return results.getString("Username").toLowerCase();
                 }
-            } catch (SQLException resultsException) {
+            } catch (Exception resultsException) {
                 String error = "Database error - can't select by id from 'Admins' table: " + resultsException.getMessage();
 
                 System.out.println(error);
@@ -93,9 +92,15 @@ public class Admin {
     public String attemptLogin(@FormDataParam("username") String username,
                                @FormDataParam("password") String password) {
 
-        System.out.println("/user/login - Attempt by " + username);
-
         try {
+
+            if (username == null ||
+                    password == null) {
+                throw new Exception("One or more form data parameters are missing in the HTTP request.");
+            }
+
+            System.out.println("/user/login - Attempt by " + username);
+
             PreparedStatement statement1 = Main.db.prepareStatement(
                     "SELECT Username, Password, SessionToken FROM Admins WHERE Username = ?"
             );
@@ -120,7 +125,7 @@ public class Admin {
                 return "{\"error\": \"Can't find user account.\"}";
             }
 
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
             String error = "Database error - can't process login: " + resultsException.getMessage();
             System.out.println(error);
             return "{\"error\": \"" + error + "\"}";
@@ -167,7 +172,7 @@ public class Admin {
                 PreparedStatement statement = Main.db.prepareStatement("Update Admins SET SessionToken = NULL WHERE SessionToken = ?");
                 statement.setString(1, token);
                 statement.executeUpdate();
-            } catch (SQLException resultsException) {
+            } catch (Exception resultsException) {
                 String error = "Database error - can't update 'Admins' table: " + resultsException.getMessage();
                 System.out.println(error);
             }
@@ -188,9 +193,13 @@ public class Admin {
     public String addAdmin(  @FormDataParam("username") String username,
                              @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/admin/new username=" + username + " - Adding new admin to database");
-
         try {
+
+            if (username == null) {
+                throw new Exception("One or more form data parameters are missing in the HTTP request.");
+            }
+
+            System.out.println("/admin/new username=" + username + " - Adding new admin to database");
 
             String currentUsername = Admin.validateSessionCookie(sessionCookie);
             if (currentUsername == null) {
@@ -204,7 +213,7 @@ public class Admin {
 
             return "{\"status\": \"OK\"}";
 
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
             String error = "Database error - can't insert into 'Admins' table: " + resultsException.getMessage();
             System.out.println(error);
             return "{\"error\": \"" + error + "\"}";
@@ -226,9 +235,14 @@ public class Admin {
                                   @FormDataParam("password") String password,
                                   @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/admin/reset username=" + username + " - Resetting password for user in database");
-
         try {
+
+            if (username == null ||
+                    password == null) {
+                throw new Exception("One or more form data parameters are missing in the HTTP request.");
+            }
+
+            System.out.println("/admin/reset username=" + username + " - Resetting password for user in database");
 
             String currentUsername = Admin.validateSessionCookie(sessionCookie);
             if (currentUsername == null) {
@@ -243,7 +257,7 @@ public class Admin {
 
             return "{\"status\": \"OK\"}";
 
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
             String error = "Database error - can't update 'Admins' table: " + resultsException.getMessage();
             System.out.println(error);
             return "{\"error\": \"" + error + "\"}";
@@ -265,9 +279,14 @@ public class Admin {
                                @FormDataParam("newUsername") String newUsername,
                                @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/admin/rename oldUsername=" + oldUsername + " newUsername=" + newUsername + " - Renaming user in database");
-
         try {
+
+            if (oldUsername == null ||
+                    newUsername == null) {
+                throw new Exception("One or more form data parameters are missing in the HTTP request.");
+            }
+
+            System.out.println("/admin/rename oldUsername=" + oldUsername + " newUsername=" + newUsername + " - Renaming user in database");
 
             String currentUsername = Admin.validateSessionCookie(sessionCookie);
             if (currentUsername == null) {
@@ -282,7 +301,7 @@ public class Admin {
 
             return "{\"status\": \"OK\"}";
 
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
             String error = "Database error - can't update 'Admins' table: " + resultsException.getMessage();
             System.out.println(error);
             return "{\"error\": \"" + error + "\"}";
@@ -303,9 +322,13 @@ public class Admin {
     public String deleteAdmin( @FormDataParam("username") String username,
                                  @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/admin/delete username=" + username + " - Deleting user from database");
-
         try {
+
+            if (username == null) {
+                throw new Exception("One or more form data parameters are missing in the HTTP request.");
+            }
+
+            System.out.println("/admin/delete username=" + username + " - Deleting user from database");
 
             String currentUsername = Admin.validateSessionCookie(sessionCookie);
             if (currentUsername == null) {
@@ -323,7 +346,7 @@ public class Admin {
 
             return "{\"status\": \"OK\"}";
 
-        } catch (SQLException resultsException) {
+        } catch (Exception resultsException) {
             String error = "Database error - can't delete from 'Admins' table: " + resultsException.getMessage();
             System.out.println(error);
             return "{\"error\": \"" + error + "\"}";
