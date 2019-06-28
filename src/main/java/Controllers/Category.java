@@ -28,7 +28,7 @@ public class Category {
         String error;
         try {
 
-            System.out.println("/software/list - Getting all categories from database");
+            System.out.println("/category/list - Getting all categories from database");
 
             PreparedStatement statement = Main.db.prepareStatement(
                     "SELECT c.CategoryId, c.Name, " +
@@ -68,7 +68,7 @@ public class Category {
     public String addCategory(  @FormDataParam("name") String name,
                                 @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/category/add name=" + name + " - Adding category to database");
+        System.out.println("/category/new name=" + name + " - Adding category to database");
 
         try {
 

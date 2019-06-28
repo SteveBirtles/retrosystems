@@ -23,33 +23,6 @@ import java.util.Comparator;
 @Path("image/")
 public class Image {
 
-    /*@SuppressWarnings("unchecked")
-    public static ArrayList<String> allImages_() {
-        ArrayList<String> images = new ArrayList<>();
-
-        File folder = new File("resources/client/img");
-
-        File[] sortedFiles = folder.listFiles();
-
-        if (sortedFiles != null) {
-
-            Arrays.sort(sortedFiles, new Comparator<File>() {
-                @Override
-                public int compare(File file1, File file2) {
-                    return file1.getName().compareTo(file2.getName());
-                }
-            });
-
-            for (File file : sortedFiles) {
-                if (file.isFile()) {
-                    images.add(file.getName());
-                }
-            }
-        }
-
-        return images;
-    }*/
-
     /*-------------------------------------------------------
     The API request handler for /image/list
         FormDataParams: none

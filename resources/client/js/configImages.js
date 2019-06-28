@@ -92,6 +92,7 @@ function uploadImage(event) {
         alert('No file specified');
     }
 
+
 }
 
 /*-------------------------------------------------------
@@ -139,7 +140,7 @@ function deleteImageFile(event) {
         let formData = new FormData();
         formData.append('filename', filename);
 
-        fetch('/image/delete', {method: 'post'})
+        fetch('/image/delete', {method: 'post',  body: formData})
             .then(response => response.json())
             .then(data => {
 

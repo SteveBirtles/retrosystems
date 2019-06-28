@@ -265,7 +265,7 @@ public class Admin {
                                @FormDataParam("newUsername") String newUsername,
                                @CookieParam("sessionToken") Cookie sessionCookie) {
 
-        System.out.println("/admin/reset oldUsername=" + oldUsername + " newUsername=" + newUsername + " - Renaming user in database");
+        System.out.println("/admin/rename oldUsername=" + oldUsername + " newUsername=" + newUsername + " - Renaming user in database");
 
         try {
 
