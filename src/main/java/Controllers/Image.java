@@ -61,7 +61,7 @@ public class Image {
 
         } catch (Exception resultsException) {
 
-            String error = "Database error - can't select all from 'Software' table: " + resultsException.getMessage();
+            String error = "Database error - can't select all from one of the tables with images: " + resultsException.getMessage();
 
             System.out.println("Image upload error: " + error);
             return "{\"error\":\"" + error + "\"}";
