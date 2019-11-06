@@ -186,7 +186,7 @@ public class RetroSystem {
                              @DefaultValue("false") @FormDataParam("handheld") String handheld,
                              @FormDataParam("imageURL") String imageURL,
                              @FormDataParam("notes") String notes,
-                             @CookieParam("sessionToken") Cookie sessionCookie) {
+                             @CookieParam("sessionToken") String sessionCookie) {
 
         try {
 
@@ -253,7 +253,7 @@ public class RetroSystem {
     @Path("delete")
     @Produces(MediaType.APPLICATION_JSON)
     public String deleteSystem(@FormDataParam("id") Integer id,
-                               @CookieParam("sessionToken") Cookie sessionCookie) {
+                               @CookieParam("sessionToken") String sessionCookie) {
 
         try {
 

@@ -65,7 +65,7 @@ public class Category {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public String addCategory(  @FormDataParam("name") String name,
-                                @CookieParam("sessionToken") Cookie sessionCookie) {
+                                @CookieParam("sessionToken") String sessionCookie) {
 
         try {
 
@@ -106,7 +106,7 @@ public class Category {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public String renameCategory(  @FormDataParam("id") String id, @FormDataParam("name") String name,
-                                   @CookieParam("sessionToken") Cookie sessionCookie) {
+                                   @CookieParam("sessionToken") String sessionCookie) {
 
         try {
 
@@ -149,7 +149,7 @@ public class Category {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public String deleteCategory(@FormDataParam("id") String id,
-                                   @CookieParam("sessionToken") Cookie sessionCookie) {
+                                   @CookieParam("sessionToken") String sessionCookie) {
 
         try {
 

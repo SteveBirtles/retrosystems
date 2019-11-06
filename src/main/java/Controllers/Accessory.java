@@ -163,7 +163,7 @@ public class Accessory {
                                   @FormDataParam("quantity") Integer quantity,
                                   @DefaultValue("false") @FormDataParam("thirdParty") String thirdParty,
                                   @FormDataParam("imageURL") String imageURL,
-                                  @CookieParam("sessionToken") Cookie sessionCookie) {
+                                  @CookieParam("sessionToken") String sessionCookie) {
 
         try {
 
@@ -227,7 +227,7 @@ public class Accessory {
     @Path("delete")
     @Produces(MediaType.APPLICATION_JSON)
     public String deleteSoftware(@FormDataParam("id") Integer id,
-                                 @CookieParam("sessionToken") Cookie sessionCookie) {
+                                 @CookieParam("sessionToken") String sessionCookie) {
 
         try {
 

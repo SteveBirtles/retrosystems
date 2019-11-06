@@ -24,7 +24,7 @@ public class Admin {
     @GET
     @Path("list")
     @Produces(MediaType.APPLICATION_JSON)
-    public String listAdminsForConfig(@CookieParam("sessionToken") Cookie sessionCookie) {
+    public String listAdminsForConfig(@CookieParam("sessionToken") String sessionCookie) {
         String error;
         try {
 
@@ -59,23 +59,20 @@ public class Admin {
     have a particular sessionToken value as found in the cookie.
     Returns the username or null if no user found.
     ------------------------------------------------------*/
-    public static String validateSessionCookie(Cookie sessionCookie) {
-        if (sessionCookie != null) {
-            String token = sessionCookie.getValue();
-            try {
-                PreparedStatement statement = Main.db.prepareStatement(
-                        "SELECT Username FROM Admins WHERE SessionToken = ?"
-                );
-                statement.setString(1, token);
-                ResultSet results = statement.executeQuery();
-                if (results != null && results.next()) {
-                    return results.getString("Username").toLowerCase();
-                }
-            } catch (Exception resultsException) {
-                String error = "Database error - can't select by id from 'Admins' table: " + resultsException.getMessage();
-
-                System.out.println(error);
+    public static String validateSessionCookie(String token) {
+        try {
+            PreparedStatement statement = Main.db.prepareStatement(
+                    "SELECT Username FROM Admins WHERE SessionToken = ?"
+            );
+            statement.setString(1, token);
+            ResultSet results = statement.executeQuery();
+            if (results != null && results.next()) {
+                return results.getString("Username").toLowerCase();
             }
+        } catch (Exception resultsException) {
+            String error = "Database error - can't select by id from 'Admins' table: " + resultsException.getMessage();
+
+            System.out.println(error);
         }
         return null;
     }
@@ -141,7 +138,7 @@ public class Admin {
     @GET
     @Path("check")
     @Produces(MediaType.APPLICATION_JSON)
-    public String checkLogin(@CookieParam("sessionToken") Cookie sessionCookie) {
+    public String checkLogin(@CookieParam("sessionToken") String sessionCookie) {
 
         System.out.println("/admin/check - Checking user against database");
 
@@ -162,20 +159,17 @@ public class Admin {
     ------------------------------------------------------*/
     @POST
     @Path("logout")
-    public void logout(@CookieParam("sessionToken") Cookie sessionCookie) {
+    public void logout(@CookieParam("sessionToken") String token) {
 
         System.out.println("/admin/logout - Logging out user");
 
-        if (sessionCookie != null) {
-            String token = sessionCookie.getValue();
-            try {
-                PreparedStatement statement = Main.db.prepareStatement("Update Admins SET SessionToken = NULL WHERE SessionToken = ?");
-                statement.setString(1, token);
-                statement.executeUpdate();
-            } catch (Exception resultsException) {
-                String error = "Database error - can't update 'Admins' table: " + resultsException.getMessage();
-                System.out.println(error);
-            }
+        try {
+            PreparedStatement statement = Main.db.prepareStatement("Update Admins SET SessionToken = NULL WHERE SessionToken = ?");
+            statement.setString(1, token);
+            statement.executeUpdate();
+        } catch (Exception resultsException) {
+            String error = "Database error - can't update 'Admins' table: " + resultsException.getMessage();
+            System.out.println(error);
         }
 
     }
@@ -191,7 +185,7 @@ public class Admin {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public String addAdmin(  @FormDataParam("username") String username,
-                             @CookieParam("sessionToken") Cookie sessionCookie) {
+                             @CookieParam("sessionToken") String sessionCookie) {
 
         try {
 
@@ -233,7 +227,7 @@ public class Admin {
     @Produces(MediaType.APPLICATION_JSON)
     public String resetPassword(  @FormDataParam("username") String username,
                                   @FormDataParam("password") String password,
-                                  @CookieParam("sessionToken") Cookie sessionCookie) {
+                                  @CookieParam("sessionToken") String sessionCookie) {
 
         try {
 
@@ -277,7 +271,7 @@ public class Admin {
     @Produces(MediaType.APPLICATION_JSON)
     public String renameAdmin( @FormDataParam("oldUsername") String oldUsername,
                                @FormDataParam("newUsername") String newUsername,
-                               @CookieParam("sessionToken") Cookie sessionCookie) {
+                               @CookieParam("sessionToken") String sessionCookie) {
 
         try {
 
@@ -320,7 +314,7 @@ public class Admin {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public String deleteAdmin( @FormDataParam("username") String username,
-                                 @CookieParam("sessionToken") Cookie sessionCookie) {
+                                 @CookieParam("sessionToken") String sessionCookie) {
 
         try {
 

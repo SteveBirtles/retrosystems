@@ -131,7 +131,7 @@ public class Image {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public String uploadImage(@FormDataParam("file") InputStream fileInputStream, @FormDataParam("file") FormDataContentDisposition formData,
-                              @CookieParam("sessionToken") Cookie sessionCookie) {
+                              @CookieParam("sessionToken") String sessionCookie) {
 
         System.out.println("/image/upload - Request to upload image " + formData.getFileName());
 
@@ -186,7 +186,7 @@ public class Image {
     @Produces(MediaType.APPLICATION_JSON)
     public String renameImageFile(@FormDataParam("oldFilename") String oldFilename,
                                   @FormDataParam("newFilename") String newFilename,
-                                  @CookieParam("sessionToken") Cookie sessionCookie) {
+                                  @CookieParam("sessionToken") String sessionCookie) {
 
         try {
 
@@ -233,7 +233,7 @@ public class Image {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public String deleteImageFile(  @FormDataParam("filename") String filename,
-                                    @CookieParam("sessionToken") Cookie sessionCookie) {
+                                    @CookieParam("sessionToken") String sessionCookie) {
 
         try {
 

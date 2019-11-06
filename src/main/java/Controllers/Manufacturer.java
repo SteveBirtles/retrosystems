@@ -65,7 +65,7 @@ public class Manufacturer {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public String addManufacturer(  @FormDataParam("name") String name,
-                                    @CookieParam("sessionToken") Cookie sessionCookie) {
+                                    @CookieParam("sessionToken") String sessionCookie) {
 
         try {
 
@@ -107,7 +107,7 @@ public class Manufacturer {
     @Produces(MediaType.APPLICATION_JSON)
     public String renameManufacturer(  @FormDataParam("id") String id,
                                        @FormDataParam("name") String name,
-                                       @CookieParam("sessionToken") Cookie sessionCookie) {
+                                       @CookieParam("sessionToken") String sessionCookie) {
 
         try {
 
@@ -150,7 +150,7 @@ public class Manufacturer {
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Produces(MediaType.APPLICATION_JSON)
     public String deleteManufacturer(  @FormDataParam("id") String id,
-                                       @CookieParam("sessionToken") Cookie sessionCookie) {
+                                       @CookieParam("sessionToken") String sessionCookie) {
 
         try {
 

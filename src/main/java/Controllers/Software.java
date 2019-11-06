@@ -162,7 +162,7 @@ public class Software {
                                 @FormDataParam("sales") String sales,
                                 @FormDataParam("year") String year,
                                 @FormDataParam("imageURL") String imageURL,
-                                @CookieParam("sessionToken") Cookie sessionCookie) {
+                                @CookieParam("sessionToken") String sessionCookie) {
 
         try {
 
@@ -224,7 +224,7 @@ public class Software {
     @Path("delete")
     @Produces(MediaType.APPLICATION_JSON)
     public String deleteSoftware(@FormDataParam("id") int id,
-                                 @CookieParam("sessionToken") Cookie sessionCookie) {
+                                 @CookieParam("sessionToken") String sessionCookie) {
 
         System.out.println("/software/delete id=" + id + " - Deleting software from database.");
 
